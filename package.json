@@ -1,0 +1,33 @@
+{
+  "name": "projectworks-leave-notifications",
+  "version": "1.0.0",
+  "description": "Posts Slack notifications from ProjectWorks",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/ackama/projectworks-leave-notifications"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.16.1",
+    "date-fns-tz": "^1.0.12",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/eslint": "^7.2.4",
+    "eslint": "^7.12.1",
+    "eslint-config-ackama": "^2.0.1",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2"
+  },
+  "scripts": {
+    "lint": "eslint . --ext js,jsx,ts,tsx"
+  }
+}

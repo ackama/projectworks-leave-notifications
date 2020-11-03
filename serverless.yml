@@ -1,0 +1,13 @@
+# For full config options, check the docs:
+#    docs.serverless.com
+
+service: projectworks-leave-notifications
+frameworkVersion: '2'
+provider:
+  name: aws
+  runtime: nodejs12.x
+functions:
+  week:
+    handler: handler.thisWeek
+  day:
+    handler: handler.today
