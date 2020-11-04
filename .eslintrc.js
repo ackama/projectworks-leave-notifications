@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
 /** @type {import('eslint').Linter.Config} */
 const config = {
-  extends: ["ackama"],
+  extends: ['ackama'],
   env: {
-    node: true,
-  },
+    node: true
+  }
 };
 
 module.exports = config;
