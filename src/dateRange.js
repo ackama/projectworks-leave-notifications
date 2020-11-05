@@ -6,8 +6,8 @@ module.exports.utcWeekRange = (on = new Date()) => {
   const weekRangeOpts = { locale: LOCALE, weekStartsOn: WEEK_STARTS_ON };
 
   return [
-    dateFns.startOfWeek(on, weekRangeOpts).toUTCString(),
-    dateFns.endOfWeek(on, weekRangeOpts).toUTCString()
+    dateFns.startOfWeek(on, weekRangeOpts),
+    dateFns.endOfWeek(on, weekRangeOpts)
   ];
 };
 
