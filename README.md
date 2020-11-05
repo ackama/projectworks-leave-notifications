@@ -7,24 +7,19 @@ ProjectWorks into Slack
 - [x] Collects and collates daily leave requests
 - [x] Sideloads user information
 - [x] Filters to approved leave requests only
-- [ ] Posts to Slack via webhook
-- [ ] Run at a fixed time daily and weekly
+- [x] Posts to Slack via webhook
+- [x] Run at a fixed time daily and weekly
 - [ ] Has some kind of tests
 - [ ] CI/CD
-
-## A word on the changelog
-
-You may also notice that we have a changelog at [CHANGELOG.md](CHANGELOG.md)
-You may be tempted to include changes to this in your branch, but don't worry
-about this — we'll take care of it when we release a new version.
 
 ### Getting started
 
 * `npm installl`
-* `cp .env.example .env`, and fill in the missing details
-* `serverless invoke local --function week` <- Weekly summary
-* `serverless invoke local --function today` <- Today's summary
+* `cp .env.example.production .env.development`, and fill in the missing details
+* `serverless invoke local --function weeklyReport` <- Weekly summary
+* `serverless invoke local --function dailyReport` <- Today's summary
 * `npm run lint` <- Check code style
+* `npm run test` <- Run tests
 
 ### Configuration
 
@@ -37,6 +32,7 @@ Environment variables of note:
 * `PROJECTWORKS_PASSWORD` - the basic auth password for accessing the
   ProjectWorks API. This is _also_ not your personal Projectworks account
   password.
+* `SLACK_WEBHOOK_URL` - the webhook URL to post messages to. Must be configured to run, even locally.
 
 Constants that you might want to change (`handler.js`):
 
@@ -58,6 +54,8 @@ Constants that you might want to change (`handler.js`):
 `serverless deploy` will provision the necessary infrastructure to run these
 scripts. AWS Lambda is assumed, but there aren't any external service
 dependencies, so this would quite easily support multiple clouds.
+
+The tasks are scheduled with cron expressions that you can adjust within serverless.yml.
 
 
 ### Contributing
