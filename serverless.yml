@@ -27,7 +27,13 @@ package:
 functions:
   weeklyReport:
     handler: handler.weeklyReport
+    events:
+      # Run weekly, Sunday 19:00 UTC (Monday 7/8am in NZ)
+      - schedule: cron(0 19 ? * 1 *)
   dailyReport:
     handler: handler.dailyReport
+    events:
+      # Run daily on week days, 19:00 UTC (7/8am in NZ)
+      - schedule: cron(0 19 ? * 1-5 *)
 plugins:
   - serverless-dotenv-plugin
