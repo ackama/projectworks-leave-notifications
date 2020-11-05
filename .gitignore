@@ -6,5 +6,6 @@ jspm_packages
 .serverless
 
 # .env files
-.env
+.env.production
+.env.uat
 .tmp
