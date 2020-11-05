@@ -10,7 +10,8 @@ ProjectWorks into Slack
 - [x] Posts to Slack via webhook
 - [x] Run at a fixed time daily and weekly
 - [ ] Has some kind of tests
-- [ ] CI/CD
+- [x] CI
+- [ ] CD
 
 ### Getting started
 
