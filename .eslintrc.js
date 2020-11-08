@@ -1,7 +1,8 @@
 const config = {
   extends: ['ackama'],
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
+    ecmaVersion: 2018
   },
   env: {
     node: true
