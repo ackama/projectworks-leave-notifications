@@ -5,6 +5,8 @@
   "main": "handler.js",
   "scripts": {
     "lint": "eslint . --ext js,jsx,ts,tsx",
+    "deploy-uat": "serverless deploy --stage=uat",
+    "deploy-prod": "serverless deploy --stage=prod",
     "coverage": "jest --silent --colors --coverage",
     "lint-fix": "eslint . --ext js,jsx,ts,tsx --fix",
     "test": "jest --colors --silent --passWithNoTests"
