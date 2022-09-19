@@ -27,6 +27,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "typescript": "^4.8.3",
     "@types/eslint": "^7.2.4",
     "eslint": "^7.12.1",
     "eslint-config-ackama": "^2.0.1",
