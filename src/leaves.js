@@ -1,5 +1,6 @@
 const { isWithinInterval } = require('date-fns');
 const { fetchLeaves, fetchUser } = require('./projectworks');
+const { sortByUser } = require('./sortByUsers');
 const APPROVED_LEAVE_STATUS = 2;
 
 module.exports.leavesBetween = async (startDate, endDate) => {
@@ -10,15 +11,17 @@ module.exports.leavesBetween = async (startDate, endDate) => {
     pageSize: 1000
   }).then(r => r.json());
 
-  return Promise.all(
-    leaves.map(async leave => ({
-      user: await fetchUser(leave.UserID),
-      days: leave.Days.filter(({ Date: date }) =>
-        isWithinInterval(Date.parse(date), {
-          start: startDate,
-          end: endDate
-        })
-      )
-    }))
+  return sortByUser(
+    await Promise.all(
+      leaves.map(async leave => ({
+        user: await fetchUser(leave.UserID),
+        days: leave.Days.filter(({ Date: date }) =>
+          isWithinInterval(Date.parse(date), {
+            start: startDate,
+            end: endDate
+          })
+        )
+      }))
+    )
   );
 };
