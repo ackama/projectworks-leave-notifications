@@ -26,12 +26,34 @@ provider:
     Project: projectworks-leave-notifications
 package:
   patterns:
-    - src/**
-    - handler.js
-    - '!spec/**'
-    - '!.git/**'
-    - '!*.gitignored*'
-    - '!.env*'
+    - '!**/*'
+    - 'package.json'
+    - 'node_modules/**'
+    - 'src/**'
+    - 'handler.js'
+    - '!node_modules/@types/**'
+    - '!**/tsconfig*.json'
+    - '!**/*.d.ts'
+    - '!**/*.gradle'
+    - '!**/*.h'
+    - '!**/*.html'
+    - '!**/*.java'
+    - '!**/*.m'
+    - '!**/*.map'
+    - '!**/*.md'
+    - '!**/*.npmignore'
+    - '!**/*.pbxproj'
+    - '!**/*.pem'
+    - '!**/*.podspec'
+    - '!**/*.ts'
+    - '!**/*.tsbuildinfo'
+    - '!**/*.txt'
+    - '!**/*.un~'
+    - '!**/*.xcworkspacedata'
+    - '!**/*.xml'
+    - '!**/*.yml'
+    - '!**/Makefile'
+    - '!**/node_modules/.package-lock.json'
 functions:
   weeklyReport:
     handler: handler.weeklyReport
