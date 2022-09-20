@@ -5,7 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "lint": "eslint . --ext js,jsx,ts,tsx",
-    "deploy-uat": "serverless deploy --stage=uat",
+    "deploy-staging": "serverless deploy --stage=staging",
     "deploy-prod": "serverless deploy --stage=prod",
     "coverage": "jest --silent --colors --coverage",
     "lint-fix": "eslint . --ext js,jsx,ts,tsx --fix",
@@ -27,8 +27,6 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "typescript": "^4.8.3",
-    "@types/eslint": "^7.2.4",
     "eslint": "^7.12.1",
     "eslint-config-ackama": "^2.0.1",
     "eslint-plugin-eslint-comments": "^3.2.0",
