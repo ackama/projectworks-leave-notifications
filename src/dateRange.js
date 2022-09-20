@@ -19,3 +19,7 @@ module.exports.utcDayRange = (on = new Date()) => {
     dateFns.endOfDay(on, dayRangeOpts)
   ];
 };
+
+module.exports.utcMonthRange = (on = new Date()) => {
+  return [dateFns.startOfMonth(on), dateFns.endOfMonth(on)];
+};
