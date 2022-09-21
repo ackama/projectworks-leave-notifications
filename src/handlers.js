@@ -2,27 +2,46 @@ const { format: formatDate } = require('date-fns');
 const { utcWeekRange, utcDayRange } = require('./dateRange');
 const { leavesBetween } = require('./leaves');
 const { Notifier } = require('./notifier');
-const FULL_DAY_CUTOFF_HOURS = 7; // Leave over this amount will assume a full day
+const FULL_DAY_CUTOFF_HOURS = 7; // Leave on or over this amount will assume a full day
 
-const formatLeaveForSlack = ({ user, days, withDate = true }) => {
+const formatHours = numHours => {
+  if (numHours >= FULL_DAY_CUTOFF_HOURS) {
+    return 'all day';
+  }
+
+  if (numHours === 1) {
+    return '1 hr';
+  }
+
+  return `${numHours} hrs`;
+};
+
+const formatForWeeklyReport = ({ user, days, withDate = true }) => {
   const formattedDays = days
     .map(
       ({ Date: date, Hours: hours }) =>
-        `${withDate ? formatDate(Date.parse(date), 'EEE do') : ''}${
-          hours < FULL_DAY_CUTOFF_HOURS ? ` (${hours} hrs)` : ' (all day)'
-        }`
+        `${
+          withDate ? formatDate(Date.parse(date), 'EEE do') : ''
+        } (${formatHours(hours)})`
     )
     .filter(entry => entry.length)
     .join('\n');
 
-  // I don't know why the ProjectWorks API does this sometimes
-  if (!formattedDays.length) {
-    return ' ';
-  }
-
   const codeBlockWrappedDays = `\`\`\`${formattedDays}\`\`\``;
   const formattedName = `*${user.FirstName} ${user.LastName}*`;
   const output = `:palm_tree: ${formattedName}\n${codeBlockWrappedDays}`;
+
+  return output;
+};
+
+const formatForDailyReport = ({ user, days }) => {
+  const formattedHours = days
+    .map(({ Hours: hours }) => `${formatHours(hours)}`)
+    .filter(entry => entry.length > 0)
+    .join(', ');
+
+  const formattedName = `${user.FirstName} ${user.LastName}`;
+  const output = `:palm_tree: ${formattedName}: ${formattedHours}`;
 
   return output;
 };
@@ -36,7 +55,7 @@ module.exports.weeklyReport = async () => {
     notifier.bufferMessage(`On leave this week:`, 'header');
     leaves.forEach(leave =>
       notifier.bufferMessage(
-        formatLeaveForSlack({ ...leave, withDate: true }),
+        formatForWeeklyReport({ ...leave, withDate: true }),
         'section'
       )
     );
@@ -58,10 +77,7 @@ module.exports.dailyReport = async () => {
       'header'
     );
     leaves.forEach(leave =>
-      notifier.bufferMessage(
-        formatLeaveForSlack({ ...leave, withDate: false }),
-        'section'
-      )
+      notifier.bufferMessage(formatForDailyReport(leave), 'section')
     );
   } else {
     notifier.bufferMessage('No leave booked today.', 'section');
