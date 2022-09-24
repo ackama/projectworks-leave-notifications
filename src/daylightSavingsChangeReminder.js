@@ -1,6 +1,6 @@
 const { DateTime } = require('luxon');
 
-module.exports.generateReport = notifier => {
+module.exports.generateDailyReport = notifier => {
   const nowInWellington = DateTime.now().setZone('Pacific/Auckland');
   const nowInMelbourne = DateTime.now().setZone('Australia/Melbourne');
   const nowOffsetDiff = nowInWellington.offset - nowInMelbourne.offset;
@@ -14,33 +14,17 @@ module.exports.generateReport = notifier => {
     nextWeekInWellington.offset - nextWeekInMelbourne.offset;
   const nextWeekOffsetDiffHours = nextWeekOffsetDiff / 60;
 
-  console.log(
-    nextWeekInWellington.offset,
-    nextWeekInMelbourne.offset,
-    nextWeekOffsetDiff
-  );
-
   const lastWeekInWellington = nowInWellington.minus({ days: 7 });
   const lastWeekInMelbourne = nowInMelbourne.minus({ days: 7 });
   const lastWeekOffsetDiff =
     lastWeekInWellington.offset - lastWeekInMelbourne.offset;
   const lastWeekOffsetDiffHours = lastWeekOffsetDiff / 60;
 
-  console.log(
-    lastWeekInWellington.offset,
-    lastWeekInMelbourne.offset,
-    lastWeekOffsetDiff
-  );
-
   // We only deliver this report on Friday
   if (nowInWellington.weekdayLong === 'Friday') {
     if (nowOffsetDiff !== nextWeekOffsetDiff) {
       notifier.bufferMessage(
-        `:warning: Daylight savings will move your meetings next week!`,
-        'header'
-      );
-      notifier.bufferMessage(
-        `Melbourne is currently *${nowOffsetDiffHours} hours* behind Wellington. Next week, Melbourne will be *${nextWeekOffsetDiffHours} hours* behind Wellington`,
+        `:warning: *Daylight savings will move your meetings next week!* Melbourne is currently *${nowOffsetDiffHours} hours* behind Wellington. Next week, Melbourne will be *${nextWeekOffsetDiffHours} hours* behind Wellington.`,
         'section'
       );
     }
@@ -50,11 +34,7 @@ module.exports.generateReport = notifier => {
   if (nowInWellington.weekdayLong === 'Monday') {
     if (nowOffsetDiff !== lastWeekOffsetDiff) {
       notifier.bufferMessage(
-        `:warning: Daylight savings has moved your meetings this week!`,
-        'header'
-      );
-      notifier.bufferMessage(
-        `Melbourne is currently *${nowOffsetDiffHours} hours* behind Wellington. Last week, Melbourne was *${lastWeekOffsetDiffHours} hours* behind Wellington`,
+        `:warning: *Daylight savings has moved your meetings this week!* Melbourne is currently *${nowOffsetDiffHours} hours* behind Wellington. Last week, Melbourne was *${lastWeekOffsetDiffHours} hours* behind Wellington.`,
         'section'
       );
     }
