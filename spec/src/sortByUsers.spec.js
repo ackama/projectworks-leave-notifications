@@ -17,7 +17,7 @@ describe('sortByUser', () => {
 
     expect(sortedLeaves.map(({ user }) => `${user.FirstName} ${user.LastName}`))
       .toMatchInlineSnapshot(`
-      Array [
+      [
         "Alexander Summers",
         "Armando Muñoz",
         "Charles Xavier",
