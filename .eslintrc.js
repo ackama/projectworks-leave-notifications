@@ -2,7 +2,7 @@ const config = {
   extends: ['ackama'],
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 2018
+    ecmaVersion: 2020
   },
   env: {
     node: true
