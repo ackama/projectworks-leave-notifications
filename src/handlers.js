@@ -1,6 +1,7 @@
 const daylightSavingsChangeReminder = require('./daylightSavingsChangeReminder');
 const leaveReminder = require('./leaveReminder');
 const { Notifier } = require('./notifier');
+const publicHolidayReminder = require('./publicHolidayReminder');
 
 module.exports.weeklyReport = async () => {
   const notifier = new Notifier();
@@ -14,7 +15,8 @@ module.exports.dailyReport = async () => {
   const notifier = new Notifier();
 
   await leaveReminder.generateDailyReport(notifier);
-  await daylightSavingsChangeReminder.generateReport(notifier);
+  await publicHolidayReminder.generateDailyReport(notifier);
+  await daylightSavingsChangeReminder.generateDailyReport(notifier);
 
   return notifier.sendBufferedMessages();
 };
