@@ -51,8 +51,8 @@ module.exports.generateDailyReport = async notifier => {
 
   if (leaves.length) {
     notifier.bufferMessage(
-      `On leave today, ${formatDate(date, 'EEEE d LLL')}:`,
-      'header'
+      `*On leave today, ${formatDate(date, 'EEEE d LLL')}:*`,
+      'section'
     );
     leaves.forEach(leave =>
       notifier.bufferMessage(formatForDailyReport(leave), 'section')
@@ -67,7 +67,7 @@ module.exports.generateWeeklyReport = async notifier => {
   const leaves = await leavesBetween(...utcWeekRange(date));
 
   if (leaves.length) {
-    notifier.bufferMessage(`On leave this week:`, 'header');
+    notifier.bufferMessage(`*On leave this week:*`, 'section');
     leaves.forEach(leave =>
       notifier.bufferMessage(
         formatForWeeklyReport({ ...leave, withDate: true }),
