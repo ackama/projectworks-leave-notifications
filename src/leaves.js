@@ -1,4 +1,4 @@
-const { isWithinInterval } = require('date-fns');
+const { Interval, DateTime } = require('luxon');
 const { fetchLeaves, fetchUser } = require('./projectworks');
 const { sortByUser } = require('./sortByUsers');
 const APPROVED_LEAVE_STATUS = 2;
@@ -11,14 +11,13 @@ module.exports.leavesBetween = async (startDate, endDate) => {
     pageSize: 1000
   }).then(r => r.json());
 
+  const intervalOfInterest = Interval.fromDateTimes(startDate, endDate);
+
   const decoratedLeaves = await Promise.all(
     rawLeavesFromProjectWorks.map(async leave => ({
       user: await fetchUser(leave.UserID),
       days: leave.Days.filter(({ Date: date }) =>
-        isWithinInterval(Date.parse(date), {
-          start: startDate,
-          end: endDate
-        })
+        intervalOfInterest.contains(DateTime.fromISO(date))
       )
     }))
   );
