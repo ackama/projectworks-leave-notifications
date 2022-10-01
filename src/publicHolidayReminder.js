@@ -23,15 +23,11 @@ const findRelevantEvents = (rawEvents, date) => {
 };
 
 const getCalendarData = async filePathOrUrl => {
-  let events = [];
-
   if (filePathOrUrl.startsWith('http')) {
-    events = await ical.async.fromURL(filePathOrUrl);
-  } else {
-    events = await ical.async.parseFile(filePathOrUrl);
+    return ical.async.fromURL(filePathOrUrl);
   }
 
-  return events;
+  return ical.async.parseFile(filePathOrUrl);
 };
 
 const getStartOfTodayInUTC = () => {
