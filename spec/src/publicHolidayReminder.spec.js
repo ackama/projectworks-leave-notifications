@@ -23,36 +23,36 @@ describe('generateDailyReport', () => {
     });
 
     expect(mockNotifier.bufferMessage).toMatchInlineSnapshot(`
-    [MockFunction] {
-      "calls": [
-        [
-          "*Public holidays:*",
-          "section",
+      [MockFunction] {
+        "calls": [
+          [
+            "*Public holidays:*",
+            "section",
+          ],
+          [
+            ":flag-nz: New Zealand: Public holiday (Christmas Day)",
+            "section",
+          ],
+          [
+            ":flag-au: Australia: Restricted trading day - only exempt shops are permitted to open (Christmas Day)",
+            "section",
+          ],
         ],
-        [
-          ":flag-nz: New Zealand: Public holiday (Christmas Day)",
-          "section",
+        "results": [
+          {
+            "type": "return",
+            "value": undefined,
+          },
+          {
+            "type": "return",
+            "value": undefined,
+          },
+          {
+            "type": "return",
+            "value": undefined,
+          },
         ],
-        [
-          ":flag-au: Australia: Restricted trading day - only exempt shops are permitted to open (Christmas Day)",
-          "section",
-        ],
-      ],
-      "results": [
-        {
-          "type": "return",
-          "value": undefined,
-        },
-        {
-          "type": "return",
-          "value": undefined,
-        },
-        {
-          "type": "return",
-          "value": undefined,
-        },
-      ],
-    }
+      }
     `);
   });
 
@@ -70,28 +70,28 @@ describe('generateDailyReport', () => {
     });
 
     expect(mockNotifier.bufferMessage).toMatchInlineSnapshot(`
-    [MockFunction] {
-      "calls": [
-        [
-          "*Public holidays:*",
-          "section",
+      [MockFunction] {
+        "calls": [
+          [
+            "*Public holidays:*",
+            "section",
+          ],
+          [
+            ":flag-nz: New Zealand: Public holiday (Waitangi Day)",
+            "section",
+          ],
         ],
-        [
-          ":flag-nz: New Zealand: Public holiday (Waitangi Day)",
-          "section",
+        "results": [
+          {
+            "type": "return",
+            "value": undefined,
+          },
+          {
+            "type": "return",
+            "value": undefined,
+          },
         ],
-      ],
-      "results": [
-        {
-          "type": "return",
-          "value": undefined,
-        },
-        {
-          "type": "return",
-          "value": undefined,
-        },
-      ],
-    }
+      }
     `);
   });
 
@@ -109,28 +109,28 @@ describe('generateDailyReport', () => {
     });
 
     expect(mockNotifier.bufferMessage).toMatchInlineSnapshot(`
-    [MockFunction] {
-      "calls": [
-        [
-          "*Public holidays:*",
-          "section",
+      [MockFunction] {
+        "calls": [
+          [
+            "*Public holidays:*",
+            "section",
+          ],
+          [
+            ":flag-au: Australia: Melbourne Cup Day is a public holiday across all of Victoria unless alternate local holiday has been arranged by non-metro council (Melbourne Cup)",
+            "section",
+          ],
         ],
-        [
-          ":flag-au: Australia: Melbourne Cup Day is a public holiday across all of Victoria unless alternate local holiday has been arranged by non-metro council (Melbourne Cup)",
-          "section",
+        "results": [
+          {
+            "type": "return",
+            "value": undefined,
+          },
+          {
+            "type": "return",
+            "value": undefined,
+          },
         ],
-      ],
-      "results": [
-        {
-          "type": "return",
-          "value": undefined,
-        },
-        {
-          "type": "return",
-          "value": undefined,
-        },
-      ],
-    }
+      }
     `);
   });
 });
