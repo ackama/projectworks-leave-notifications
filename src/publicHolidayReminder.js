@@ -51,20 +51,20 @@ module.exports.generateDailyReport = async (
   const auEvents = findRelevantEvents(auPublicHolidays, startOfTodayInUTC);
 
   if (nzEvents.length || auEvents.length) {
-    notifier.bufferMessage(`*Public holidays (beta):*`, 'section');
+    notifier.bufferMessage(`*Public holidays:*`, 'section');
   }
 
-  nzEvents.forEach(nzEvent =>
+  for (const nzEvent of nzEvents) {
     notifier.bufferMessage(
       `:flag-nz: New Zealand: ${nzEvent.description}`,
       'section'
-    )
-  );
+    );
+  }
 
-  auEvents.forEach(auEvent =>
+  for (const auEvent of auEvents) {
     notifier.bufferMessage(
       `:flag-au: Australia: ${auEvent.description}`,
       'section'
-    )
-  );
+    );
+  }
 };

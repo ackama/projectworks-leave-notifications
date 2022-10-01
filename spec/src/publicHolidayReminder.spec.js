@@ -26,7 +26,7 @@ describe('generateDailyReport', () => {
     [MockFunction] {
       "calls": [
         [
-          "*Public holidays (beta):*",
+          "*Public holidays:*",
           "section",
         ],
         [
@@ -73,7 +73,7 @@ describe('generateDailyReport', () => {
     [MockFunction] {
       "calls": [
         [
-          "*Public holidays (beta):*",
+          "*Public holidays:*",
           "section",
         ],
         [
@@ -112,7 +112,7 @@ describe('generateDailyReport', () => {
     [MockFunction] {
       "calls": [
         [
-          "*Public holidays (beta):*",
+          "*Public holidays:*",
           "section",
         ],
         [
