@@ -50,6 +50,14 @@ module.exports.generateDailyReport = async (
   const nzEvents = findRelevantEvents(nzPublicHolidays, startOfTodayInUTC);
   const auEvents = findRelevantEvents(auPublicHolidays, startOfTodayInUTC);
 
+  console.log(
+    nzPublicHolidays,
+    auPublicHolidays,
+    nzEvents,
+    auEvents,
+    startOfTodayInUTC
+  );
+
   if (nzEvents.length || auEvents.length) {
     notifier.bufferMessage(`*Public holidays:*`, 'section');
   }
