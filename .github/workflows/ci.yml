@@ -12,6 +12,7 @@ jobs:
         node-version: 16.x
         cache: 'npm'
     - run: npm ci
+    - run: node -v
     - run: npm ls
     - run: npm run js-lint
     - run: npm run format-check
