@@ -7,7 +7,7 @@
     "deploy-staging": "serverless deploy --stage=staging",
     "deploy-prod": "serverless deploy --stage=prod",
     "coverage": "jest --silent --colors --coverage",
-    "test": "jest --colors --silent --passWithNoTests",
+    "test": "jest --colors",
     "format-check": "prettier --check './**/*.{css,scss,json,md,js,ts,tsx,jsx}'",
     "format-fix": "prettier --write './**/*.{css,scss,json,md,js,ts,tsx,jsx}'",
     "js-lint": "eslint . --ignore-pattern '!.eslintrc.js' --ext js,ts,tsx,jsx",
