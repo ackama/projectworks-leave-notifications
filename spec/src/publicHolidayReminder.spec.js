@@ -22,6 +22,7 @@ describe('generateDailyReport', () => {
       auCalendarUrl: auFixtureCalendarPath
     });
 
+    console.log(mockNotifier.bufferMessage.mock);
     expect(mockNotifier.bufferMessage).toMatchInlineSnapshot(`
       [MockFunction] {
         "calls": [
