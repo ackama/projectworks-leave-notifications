@@ -23,7 +23,7 @@
   "author": "Ackama Developers <developers@ackama.com>",
   "license": "MIT",
   "dependencies": {
-    "@slack/webhook": "^5.0.3",
+    "@slack/webhook": "^5.0.4",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
     "luxon": "^3.0.3",
