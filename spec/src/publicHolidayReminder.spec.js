@@ -5,9 +5,11 @@ describe('generateDailyReport', () => {
   const nzFixtureCalendarPath = './spec/fixtures/nz-public-holiday-dates.ics';
   const auFixtureCalendarPath =
     './spec/fixtures/au-victorian-public-holiday-dates.ics';
-  const mockNotifier = {
-    bufferMessage: jest.fn()
-  };
+  let mockNotifier = null;
+
+  beforeEach(() => {
+    mockNotifier = { bufferMessage: jest.fn() };
+  });
 
   it('buffers expected messages a holiday in both NZ and AU (Christmas day)', async () => {
     const xmasDay = DateTime.fromISO('2023-12-25', {
@@ -17,55 +19,53 @@ describe('generateDailyReport', () => {
       .toJSDate();
 
     await generateDailyReport(mockNotifier, {
-      startOfTodayInUTC: xmasDay,
+      date: xmasDay,
       nzCalendarUrl: nzFixtureCalendarPath,
       auCalendarUrl: auFixtureCalendarPath
     });
 
-    console.log(mockNotifier.bufferMessage.mock);
+    // console.log(mockNotifier.bufferMessage.mock);
     expect(mockNotifier.bufferMessage).toMatchInlineSnapshot(`
-      [MockFunction] {
-        "calls": [
-          [
-            "*Public holidays:*",
-            "section",
-          ],
-          [
-            ":flag-nz: New Zealand: Public holiday (Christmas Day)",
-            "section",
-          ],
-          [
-            ":flag-au: Australia: Restricted trading day - only exempt shops are permitted to open (Christmas Day)",
-            "section",
-          ],
+    [MockFunction] {
+      "calls": [
+        [
+          "*Public holidays:*",
+          "section",
         ],
-        "results": [
-          {
-            "type": "return",
-            "value": undefined,
-          },
-          {
-            "type": "return",
-            "value": undefined,
-          },
-          {
-            "type": "return",
-            "value": undefined,
-          },
+        [
+          ":flag-nz: New Zealand: Public holiday (Christmas Day)",
+          "section",
         ],
-      }
+        [
+          ":flag-au: Australia: Restricted trading day - only exempt shops are permitted to open (Christmas Day)",
+          "section",
+        ],
+      ],
+      "results": [
+        {
+          "type": "return",
+          "value": undefined,
+        },
+        {
+          "type": "return",
+          "value": undefined,
+        },
+        {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
     `);
   });
 
   it('buffers expected messages a holiday in NZ only', async () => {
     const waitangiDay = DateTime.fromISO('2023-02-06', {
       zone: 'Pacific/Auckland'
-    })
-      .toUTC()
-      .toJSDate();
+    }).toJSDate();
 
     await generateDailyReport(mockNotifier, {
-      startOfTodayInUTC: waitangiDay,
+      date: waitangiDay,
       nzCalendarUrl: nzFixtureCalendarPath,
       auCalendarUrl: auFixtureCalendarPath
     });
@@ -104,7 +104,7 @@ describe('generateDailyReport', () => {
       .toJSDate();
 
     await generateDailyReport(mockNotifier, {
-      startOfTodayInUTC: melbourneCupDay,
+      date: melbourneCupDay,
       nzCalendarUrl: nzFixtureCalendarPath,
       auCalendarUrl: auFixtureCalendarPath
     });

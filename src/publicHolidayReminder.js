@@ -11,9 +11,14 @@ const NZ_CALENDAR_URL =
 const AU_CALENDAR_URL =
   'https://www.vic.gov.au/sites/default/files/2022-09/Victorian-public-holiday-dates.ics';
 
+const toDateStamp = date => {
+  return DateTime.fromJSDate(date).toFormat('yyyy-MM-dd');
+};
+
+// @param date Date
 const findRelevantEvents = (rawEvents, date) => {
   return Object.values(rawEvents)
-    .filter(rawEvent => rawEvent.start?.toString() === date.toString())
+    .filter(rawEvent => toDateStamp(rawEvent.start) === toDateStamp(date))
     .map(rawEvent => {
       return {
         start: rawEvent.start,
@@ -22,6 +27,31 @@ const findRelevantEvents = (rawEvents, date) => {
     });
 };
 
+// The data we get back has start and end timestamps with UTC but are marked
+// date only.  This means that the date part of the timestamp is the correct day
+// in NZ and the timestamp + zone should be ignored.
+//
+// Example event:
+//
+//   '20230206_gs3e5e1rf77kjcdoo582od5b38@google.com': {
+//       type: 'VEVENT',
+//       params: [],
+//       start: 2023-02-06T00:00:00.000Z { dateOnly: true },
+//       datetype: 'date',
+//       end: 2023-02-07T00:00:00.000Z { dateOnly: true },
+//       dtstamp: 2022-09-22T23:12:39.000Z { tz: 'Etc/UTC' },
+//       uid: '20230206_gs3e5e1rf77kjcdoo582od5b38@google.com',
+//       class: 'PUBLIC',
+//       created: 2021-08-26T08:48:52.000Z { tz: 'Etc/UTC' },
+//       description: 'Public holiday',
+//       lastmodified: 2021-08-26T08:48:52.000Z { tz: 'Etc/UTC' },
+//       sequence: '0',
+//       status: 'CONFIRMED',
+//       summary: 'Waitangi Day',
+//       transparency: 'TRANSPARENT',
+//       method: 'PUBLISH'
+//   },
+//
 const getCalendarData = async filePathOrUrl => {
   if (filePathOrUrl.startsWith('http')) {
     return ical.async.fromURL(filePathOrUrl);
@@ -30,33 +60,18 @@ const getCalendarData = async filePathOrUrl => {
   return ical.async.parseFile(filePathOrUrl);
 };
 
-const getStartOfTodayInUTC = () => {
-  return DateTime.local({ zone: 'Pacific/Auckland' })
-    .startOf('day')
-    .toUTC()
-    .toJSDate();
-};
-
 module.exports.generateDailyReport = async (
   notifier,
   {
-    startOfTodayInUTC = getStartOfTodayInUTC(),
+    date = new Date(),
     nzCalendarUrl = NZ_CALENDAR_URL,
     auCalendarUrl = AU_CALENDAR_URL
   } = {}
 ) => {
   const nzPublicHolidays = await getCalendarData(nzCalendarUrl);
   const auPublicHolidays = await getCalendarData(auCalendarUrl);
-  const nzEvents = findRelevantEvents(nzPublicHolidays, startOfTodayInUTC);
-  const auEvents = findRelevantEvents(auPublicHolidays, startOfTodayInUTC);
-
-  console.log(
-    nzPublicHolidays,
-    auPublicHolidays,
-    nzEvents,
-    auEvents,
-    startOfTodayInUTC
-  );
+  const nzEvents = findRelevantEvents(nzPublicHolidays, date);
+  const auEvents = findRelevantEvents(auPublicHolidays, date);
 
   if (nzEvents.length || auEvents.length) {
     notifier.bufferMessage(`*Public holidays:*`, 'section');
