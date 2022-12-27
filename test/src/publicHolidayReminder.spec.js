@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const { DateTime } = require('luxon');
 const { generateDailyReport } = require('../../src/publicHolidayReminder');
 

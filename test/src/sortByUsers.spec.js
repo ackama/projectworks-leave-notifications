@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const { sortByUser } = require('../../src/sortByUsers');
 
 describe('sortByUser', () => {

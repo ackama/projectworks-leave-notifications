@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const { Interval, DateTime } = require('luxon');
 const { fetchLeaves, fetchUser } = require('./projectworks');
 const { sortByUser } = require('./sortByUsers');

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const daylightSavingsChangeReminder = require('./daylightSavingsChangeReminder');
 const leaveReminder = require('./leaveReminder');
 const { Notifier } = require('./notifier');

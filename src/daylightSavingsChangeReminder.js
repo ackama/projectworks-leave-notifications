@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const { DateTime } = require('luxon');
 
 module.exports.generateDailyReport = notifier => {

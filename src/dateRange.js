@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const dateFns = require('date-fns');
 const LOCALE = 'en-NZ';
 const WEEK_STARTS_ON = 1; // Monday

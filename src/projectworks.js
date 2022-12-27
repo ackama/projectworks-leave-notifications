@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const fetch = require('node-fetch');
 const { URLSearchParams } = require('url');
 

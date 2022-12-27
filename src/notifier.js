@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const { IncomingWebhook } = require('@slack/webhook');
 
 class Notifier {

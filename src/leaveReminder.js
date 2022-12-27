@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const { format: formatDate } = require('date-fns');
 const { utcWeekRange, utcDayRange } = require('./dateRange');
 const { leavesBetween } = require('./leaves');

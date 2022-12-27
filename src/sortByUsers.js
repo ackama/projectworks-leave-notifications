@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 module.exports.sortByUser = leaves => {
   return leaves.sort(({ user: userA }, { user: userB }) => {
     return (
