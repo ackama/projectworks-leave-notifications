@@ -1,6 +1,6 @@
-// @ts-nocheck
+import type { Leave } from './types';
 
-module.exports.sortByUser = leaves => {
+export const sortByUser = (leaves: Leave[]): Leave[] => {
   return leaves.sort(({ user: userA }, { user: userB }) => {
     return (
       userA.FirstName.localeCompare(userB.FirstName) ||

@@ -28,7 +28,7 @@
     "@slack/webhook": "^5.0.3",
     "date-fns-tz": "^1.0.12",
     "luxon": "^3.0.3",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "node-ical": "^0.15.1"
   },
   "devDependencies": {
@@ -38,6 +38,7 @@
     "@types/jest": "^29.2.4",
     "@types/luxon": "^3.1.0",
     "@types/node": "^16.18.7",
+    "@types/node-fetch": "^2.6.2",
     "@types/prettier": "^2.7.1",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",

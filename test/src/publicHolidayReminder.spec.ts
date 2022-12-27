@@ -1,13 +1,11 @@
-// @ts-nocheck
-
-const { DateTime } = require('luxon');
-const { generateDailyReport } = require('../../src/publicHolidayReminder');
+import { DateTime } from 'luxon';
+import { generateDailyReport } from '../../src/publicHolidayReminder';
 
 describe('generateDailyReport', () => {
   const nzFixtureCalendarPath = './test/fixtures/nz-public-holiday-dates.ics';
   const auFixtureCalendarPath =
     './test/fixtures/au-victorian-public-holiday-dates.ics';
-  let mockNotifier = null;
+  let mockNotifier: any = { bufferMessage: null };
 
   beforeEach(() => {
     mockNotifier = { bufferMessage: jest.fn() };

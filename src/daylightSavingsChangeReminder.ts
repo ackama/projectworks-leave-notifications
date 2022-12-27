@@ -1,8 +1,7 @@
-// @ts-nocheck
+import { DateTime } from 'luxon';
+import { Notifier } from './notifier';
 
-const { DateTime } = require('luxon');
-
-module.exports.generateDailyReport = notifier => {
+export function generateDailyReport(notifier: Notifier): void {
   const nowInWellington = DateTime.now().setZone('Pacific/Auckland');
   const nowInMelbourne = DateTime.now().setZone('Australia/Melbourne');
   const nowOffsetDiff = nowInWellington.offset - nowInMelbourne.offset;
@@ -41,4 +40,4 @@ module.exports.generateDailyReport = notifier => {
       );
     }
   }
-};
+}

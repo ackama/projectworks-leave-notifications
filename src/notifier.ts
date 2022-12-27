@@ -1,8 +1,10 @@
-// @ts-nocheck
+import { IncomingWebhook } from '@slack/webhook';
+import type { SlackApiBlock, SlackApiPayload } from './types';
 
-const { IncomingWebhook } = require('@slack/webhook');
+export class Notifier {
+  slackWebhook: IncomingWebhook;
+  blocksBuffer: SlackApiBlock[];
 
-class Notifier {
   constructor(url = process.env.SLACK_WEBHOOK_URL) {
     if (typeof url !== 'string') {
       throw new Error('Missing SLACK_WEBHOOK_URL from environment');
@@ -18,8 +20,8 @@ class Notifier {
    * @param message The line to store in the buffer
    * @param style The formatting style to use for the given block
    */
-  bufferMessage(message, style) {
-    let block = {};
+  bufferMessage(message: string, style: string) {
+    let block: SlackApiBlock;
 
     console.log(message, { style });
 
@@ -110,7 +112,7 @@ class Notifier {
     return { success: true, message: 'OK' };
   }
 
-  async send(payload) {
+  async send(payload: SlackApiPayload) {
     try {
       await this.slackWebhook.send(payload);
     } catch (e) {
@@ -122,5 +124,3 @@ class Notifier {
     return { success: true, message: 'OK' };
   }
 }
-
-module.exports.Notifier = Notifier;

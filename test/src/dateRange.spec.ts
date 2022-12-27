@@ -1,4 +1,3 @@
-// const { utcWeekRange, utcDayRange } = require('../../src/dateRange');
 import { utcDayRange, utcWeekRange } from '../../src/dateRange';
 
 // JS Date objects are not comparable so we convert them to their underlying

@@ -1,11 +1,12 @@
-// @ts-nocheck
-
 import { DateTime } from 'luxon';
-const { utcWeekRange, utcDayRange } = require('./dateRange');
-const { leavesBetween } = require('./leaves');
+import { utcDayRange, utcWeekRange } from './dateRange';
+import { leavesBetween } from './leaves';
+import type { Notifier } from './notifier';
+import type { Leave } from './types';
+
 const FULL_DAY_CUTOFF_HOURS = 7; // Leave on or over this amount will assume a full day
 
-const formatHours = numHours => {
+const formatHours = (numHours: number) => {
   if (numHours >= FULL_DAY_CUTOFF_HOURS) {
     return 'all day';
   }
@@ -17,7 +18,7 @@ const formatHours = numHours => {
   return `${numHours} hrs`;
 };
 
-const formatForDailyReport = ({ user, days }) => {
+const formatForDailyReport = ({ user, days }: Leave) => {
   const formattedHours = days
     .map(({ Hours: hours }) => `${formatHours(hours)}`)
     .filter(entry => entry.length > 0)
@@ -29,7 +30,7 @@ const formatForDailyReport = ({ user, days }) => {
   return output;
 };
 
-const formatForWeeklyReport = ({ user, days, withDate = true }) => {
+const formatForWeeklyReport = ({ user, days }: Leave, withDate = true) => {
   const formattedDays = days
     .map(
       ({ Date: dateStr, Hours: hours }) =>
@@ -49,7 +50,9 @@ const formatForWeeklyReport = ({ user, days, withDate = true }) => {
   return output;
 };
 
-module.exports.generateDailyReport = async notifier => {
+export const generateDailyReport = async (
+  notifier: Notifier
+): Promise<void> => {
   const date = new Date();
   const leaves = await leavesBetween(...utcDayRange(date));
 
@@ -66,17 +69,16 @@ module.exports.generateDailyReport = async notifier => {
   }
 };
 
-module.exports.generateWeeklyReport = async notifier => {
+export const generateWeeklyReport = async (
+  notifier: Notifier
+): Promise<void> => {
   const date = new Date();
   const leaves = await leavesBetween(...utcWeekRange(date));
 
   if (leaves.length) {
     notifier.bufferMessage(`*On leave this week:*`, 'section');
     leaves.forEach(leave =>
-      notifier.bufferMessage(
-        formatForWeeklyReport({ ...leave, withDate: true }),
-        'section'
-      )
+      notifier.bufferMessage(formatForWeeklyReport(leave, true), 'section')
     );
   } else {
     notifier.bufferMessage('No leave booked this week.', 'section');

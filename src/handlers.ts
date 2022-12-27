@@ -1,11 +1,9 @@
-// @ts-nocheck
+import * as daylightSavingsChangeReminder from './daylightSavingsChangeReminder';
+import * as leaveReminder from './leaveReminder';
+import { Notifier } from './notifier';
+import * as publicHolidayReminder from './publicHolidayReminder';
 
-const daylightSavingsChangeReminder = require('./daylightSavingsChangeReminder');
-const leaveReminder = require('./leaveReminder');
-const { Notifier } = require('./notifier');
-const publicHolidayReminder = require('./publicHolidayReminder');
-
-module.exports.weeklyReport = async () => {
+export const weeklyReport = async () => {
   const notifier = new Notifier();
 
   await leaveReminder.generateWeeklyReport(notifier);
@@ -13,7 +11,7 @@ module.exports.weeklyReport = async () => {
   return notifier.sendBufferedMessages();
 };
 
-module.exports.dailyReport = async () => {
+export const dailyReport = async () => {
   const notifier = new Notifier();
 
   await leaveReminder.generateDailyReport(notifier);
