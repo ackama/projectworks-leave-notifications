@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { jsDateToDateTime } from './dateMath';
 import { utcDayRange, utcWeekRange } from './dateRange';
 import { leavesBetween } from './leaves';
 import type { Notifier } from './notifier';
@@ -35,9 +35,7 @@ const formatForWeeklyReport = ({ user, days }: Leave, withDate = true) => {
     .map(
       ({ Date: dateStr, Hours: hours }) =>
         `${
-          withDate
-            ? DateTime.fromJSDate(new Date(dateStr)).toFormat('EEE do')
-            : ''
+          withDate ? jsDateToDateTime(new Date(dateStr)).toFormat('EEE do') : ''
         } (${formatHours(hours)})`
     )
     .filter(entry => entry.length)
@@ -58,7 +56,7 @@ export const generateDailyReport = async (
 
   if (leaves.length) {
     notifier.bufferMessage(
-      `*On leave today, ${DateTime.fromJSDate(date).toFormat('EEEE d LLL')}:*`,
+      `*On leave today, ${jsDateToDateTime(date).toFormat('EEEE d LLL')}:*`,
       'section'
     );
     leaves.forEach(leave =>

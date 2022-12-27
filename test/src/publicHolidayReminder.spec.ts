@@ -12,9 +12,7 @@ describe('generateDailyReport', () => {
   it('buffers expected messages a holiday in both NZ and AU (Christmas day)', async () => {
     const xmasDay = DateTime.fromISO('2023-12-25', {
       zone: 'Pacific/Auckland'
-    })
-      .toUTC()
-      .toJSDate();
+    }).toJSDate();
     const mockNotifier = new Notifier();
 
     await generateDailyReport(mockNotifier, {
@@ -98,9 +96,7 @@ describe('generateDailyReport', () => {
   it('buffers expected messages a holiday in AU only', async () => {
     const melbourneCupDay = DateTime.fromISO('2023-11-07', {
       zone: 'Pacific/Auckland'
-    })
-      .toUTC()
-      .toJSDate();
+    }).toJSDate();
     const mockNotifier = new Notifier();
 
     await generateDailyReport(mockNotifier, {

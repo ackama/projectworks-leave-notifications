@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';
 import {
   CalendarComponent,
   CalendarResponse,
@@ -6,6 +5,7 @@ import {
   VEvent,
   async
 } from 'node-ical';
+import { jsDateToDateTime } from './dateMath';
 import { Notifier } from './notifier';
 
 const NZ_CALENDAR_URL =
@@ -19,7 +19,7 @@ const AU_CALENDAR_URL =
   'https://www.vic.gov.au/sites/default/files/2022-09/Victorian-public-holiday-dates.ics';
 
 const toDateStamp = (date: Date): string => {
-  return DateTime.fromJSDate(date).toFormat('yyyy-MM-dd');
+  return jsDateToDateTime(date).toFormat('yyyy-MM-dd');
 };
 
 // The data we get from the calendars has start and end timestamps in UTC

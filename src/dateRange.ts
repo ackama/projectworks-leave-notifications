@@ -1,21 +1,19 @@
-import { DateTime } from 'luxon';
-
-const LOCALE = 'en-NZ';
+import { jsDateToDateTime } from './dateMath';
 
 export const utcWeekRange = (on: Date = new Date()): [Date, Date] => {
-  const targetDate = DateTime.fromJSDate(on).setLocale(LOCALE);
+  const targetDateTime = jsDateToDateTime(on);
 
   return [
-    targetDate.startOf('week').toJSDate(),
-    targetDate.endOf('week').toJSDate()
+    targetDateTime.startOf('week').toJSDate(),
+    targetDateTime.endOf('week').toJSDate()
   ];
 };
 
 export const utcDayRange = (on: Date = new Date()): [Date, Date] => {
-  const targetDate = DateTime.fromJSDate(on).setLocale(LOCALE);
+  const targetDateTime = jsDateToDateTime(on);
 
   return [
-    targetDate.startOf('day').toJSDate(),
-    targetDate.endOf('day').toJSDate()
+    targetDateTime.startOf('day').toJSDate(),
+    targetDateTime.endOf('day').toJSDate()
   ];
 };
