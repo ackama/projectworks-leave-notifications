@@ -69,7 +69,7 @@ const findRelevantEvents = (
 };
 
 const isVEvent = (item: CalendarComponent): item is VEvent => {
-  return (item as VEvent).type === 'VEVENT';
+  return item.type === 'VEVENT';
 };
 
 interface MyEvent {

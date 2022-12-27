@@ -1,11 +1,11 @@
 import { IncomingWebhook } from '@slack/webhook';
-import type { SlackApiBlock, SlackApiPayload } from './types';
+import type { NotifierResult, SlackApiBlock, SlackApiPayload } from './types';
 
 export class Notifier {
-  slackWebhook: IncomingWebhook;
-  blocksBuffer: SlackApiBlock[];
+  private readonly slackWebhook: IncomingWebhook;
+  private blocksBuffer: SlackApiBlock[];
 
-  constructor(url = process.env.SLACK_WEBHOOK_URL) {
+  public constructor(url = process.env.SLACK_WEBHOOK_URL) {
     if (typeof url !== 'string') {
       throw new Error('Missing SLACK_WEBHOOK_URL from environment');
     }
@@ -20,7 +20,7 @@ export class Notifier {
    * @param message The line to store in the buffer
    * @param style The formatting style to use for the given block
    */
-  bufferMessage(message: string, style: string) {
+  public bufferMessage(message: string, style: string): void {
     let block: SlackApiBlock;
 
     console.log(message, { style });
@@ -88,7 +88,7 @@ export class Notifier {
   /**
    * Send buffered messages and immediately empty the buffer
    */
-  async sendBufferedMessages() {
+  public async sendBufferedMessages(): Promise<NotifierResult> {
     try {
       const payload = { blocks: this.blocksBuffer };
 
@@ -112,7 +112,7 @@ export class Notifier {
     return { success: true, message: 'OK' };
   }
 
-  async send(payload: SlackApiPayload) {
+  public async send(payload: SlackApiPayload): Promise<NotifierResult> {
     try {
       await this.slackWebhook.send(payload);
     } catch (e) {

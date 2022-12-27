@@ -78,3 +78,8 @@ export interface SlackApiBlock {
 export interface SlackApiPayload {
   blocks: SlackApiBlock[];
 }
+
+export interface NotifierResult {
+  success: boolean;
+  message: string;
+}

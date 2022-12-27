@@ -26,7 +26,7 @@ describe('utcWeekRange', () => {
     ];
 
     for (const example of examples) {
-      expect(utcWeekRange(example.in).map(r => toMillis(r))).toEqual(
+      expect(utcWeekRange(example.in).map(r => toMillis(r))).toStrictEqual(
         example.out.map(r => toMillis(r))
       );
     }
@@ -53,7 +53,7 @@ describe('utcDayRange', () => {
     ];
 
     for (const example of examples) {
-      expect(utcDayRange(example.in).map(r => toMillis(r))).toEqual(
+      expect(utcDayRange(example.in).map(r => toMillis(r))).toStrictEqual(
         example.out.map(r => toMillis(r))
       );
     }

@@ -12,7 +12,9 @@ const apiGet = async (path: string): Promise<Response> => {
   headers.append('Accept', 'application/json');
   headers.append(
     'Authorization',
-    `Basic ${Buffer.from(`${PW_USERNAME}:${PW_PASSWORD}`).toString('base64')}`
+    `Basic ${Buffer.from(
+      `${PW_USERNAME as string}:${PW_PASSWORD as string}`
+    ).toString('base64')}`
   );
 
   return fetch(`${PW_URL}${path}`, { headers });
