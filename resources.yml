@@ -1,0 +1,5 @@
+# Put resources for CloudFormation to create in here
+#UploadsBucket:
+#  Type: AWS::S3::Bucket
+#  Properties:
+#    BucketName: ${self:custom.resources.uploadsBucket}

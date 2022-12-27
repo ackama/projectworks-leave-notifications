@@ -4,10 +4,12 @@ jspm_packages
 
 # Serverless directories
 .serverless
+
+.env*
+!.env.*example
+.envrc
+.tmp/
+
 coverage/
 
-# .env files
-.env
-.env.*
-!.env.example*
-.tmp
+/lib
