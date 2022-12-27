@@ -15,21 +15,10 @@ const toDateStamp = date => {
   return DateTime.fromJSDate(date).toFormat('yyyy-MM-dd');
 };
 
-// @param date Date
-const findRelevantEvents = (rawEvents, date) => {
-  return Object.values(rawEvents)
-    .filter(rawEvent => toDateStamp(rawEvent.start) === toDateStamp(date))
-    .map(rawEvent => {
-      return {
-        start: rawEvent.start,
-        description: `${rawEvent.description} (${rawEvent.summary})`
-      };
-    });
-};
-
-// The data we get back has start and end timestamps with UTC but are marked
-// date only.  This means that the date part of the timestamp is the correct day
-// in NZ and the timestamp + zone should be ignored.
+// The data we get from the calendars has start and end timestamps in UTC
+// timezone but are marked "date only". This means that the date part of the
+// timestamp is the correct day in NZ and the time and zone parts should be
+// ignored.
 //
 // Example event:
 //
@@ -52,6 +41,17 @@ const findRelevantEvents = (rawEvents, date) => {
 //       method: 'PUBLISH'
 //   },
 //
+const findRelevantEvents = (rawEvents, date) => {
+  return Object.values(rawEvents)
+    .filter(rawEvent => toDateStamp(rawEvent.start) === toDateStamp(date))
+    .map(rawEvent => {
+      return {
+        start: rawEvent.start,
+        description: `${rawEvent.description} (${rawEvent.summary})`
+      };
+    });
+};
+
 const getCalendarData = async filePathOrUrl => {
   if (filePathOrUrl.startsWith('http')) {
     return ical.async.fromURL(filePathOrUrl);
