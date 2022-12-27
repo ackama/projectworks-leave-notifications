@@ -1,15 +1,13 @@
 import { DateTime } from 'luxon';
+import { Notifier } from '../../src/notifier';
 import { generateDailyReport } from '../../src/publicHolidayReminder';
+
+jest.mock('../../src/notifier');
 
 describe('generateDailyReport', () => {
   const nzFixtureCalendarPath = './test/fixtures/nz-public-holiday-dates.ics';
   const auFixtureCalendarPath =
     './test/fixtures/au-victorian-public-holiday-dates.ics';
-  let mockNotifier: any = { bufferMessage: null };
-
-  beforeEach(() => {
-    mockNotifier = { bufferMessage: jest.fn() };
-  });
 
   it('buffers expected messages a holiday in both NZ and AU (Christmas day)', async () => {
     const xmasDay = DateTime.fromISO('2023-12-25', {
@@ -17,6 +15,7 @@ describe('generateDailyReport', () => {
     })
       .toUTC()
       .toJSDate();
+    const mockNotifier = new Notifier();
 
     await generateDailyReport(mockNotifier, {
       date: xmasDay,
@@ -24,7 +23,6 @@ describe('generateDailyReport', () => {
       auCalendarUrl: auFixtureCalendarPath
     });
 
-    // console.log(mockNotifier.bufferMessage.mock);
     expect(mockNotifier.bufferMessage).toMatchInlineSnapshot(`
     [MockFunction] {
       "calls": [
@@ -63,6 +61,7 @@ describe('generateDailyReport', () => {
     const waitangiDay = DateTime.fromISO('2023-02-06', {
       zone: 'Pacific/Auckland'
     }).toJSDate();
+    const mockNotifier = new Notifier();
 
     await generateDailyReport(mockNotifier, {
       date: waitangiDay,
@@ -102,6 +101,7 @@ describe('generateDailyReport', () => {
     })
       .toUTC()
       .toJSDate();
+    const mockNotifier = new Notifier();
 
     await generateDailyReport(mockNotifier, {
       date: melbourneCupDay,
