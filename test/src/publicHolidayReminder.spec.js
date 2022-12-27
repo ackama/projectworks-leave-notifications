@@ -4,9 +4,9 @@ const { DateTime } = require('luxon');
 const { generateDailyReport } = require('../../src/publicHolidayReminder');
 
 describe('generateDailyReport', () => {
-  const nzFixtureCalendarPath = './spec/fixtures/nz-public-holiday-dates.ics';
+  const nzFixtureCalendarPath = './test/fixtures/nz-public-holiday-dates.ics';
   const auFixtureCalendarPath =
-    './spec/fixtures/au-victorian-public-holiday-dates.ics';
+    './test/fixtures/au-victorian-public-holiday-dates.ics';
   let mockNotifier = null;
 
   beforeEach(() => {

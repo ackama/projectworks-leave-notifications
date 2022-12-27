@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-const { format: formatDate } = require('date-fns');
+import { DateTime } from 'luxon';
 const { utcWeekRange, utcDayRange } = require('./dateRange');
 const { leavesBetween } = require('./leaves');
 const FULL_DAY_CUTOFF_HOURS = 7; // Leave on or over this amount will assume a full day
@@ -32,9 +32,11 @@ const formatForDailyReport = ({ user, days }) => {
 const formatForWeeklyReport = ({ user, days, withDate = true }) => {
   const formattedDays = days
     .map(
-      ({ Date: date, Hours: hours }) =>
+      ({ Date: dateStr, Hours: hours }) =>
         `${
-          withDate ? formatDate(Date.parse(date), 'EEE do') : ''
+          withDate
+            ? DateTime.fromJSDate(new Date(dateStr)).toFormat('EEE do')
+            : ''
         } (${formatHours(hours)})`
     )
     .filter(entry => entry.length)
@@ -53,7 +55,7 @@ module.exports.generateDailyReport = async notifier => {
 
   if (leaves.length) {
     notifier.bufferMessage(
-      `*On leave today, ${formatDate(date, 'EEEE d LLL')}:*`,
+      `*On leave today, ${DateTime.fromJSDate(date).toFormat('EEEE d LLL')}:*`,
       'section'
     );
     leaves.forEach(leave =>

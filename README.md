@@ -40,7 +40,7 @@ Constants that you might want to change (`handler.js`):
 
 - `PW_URL` - you _probably_ don't need to change this unless you have a CNAME,
   proxy, or something else that changes the projectworks host to connect to.
-- `LOCALE` - hints to date-fns where in the world you are
+- `LOCALE` - hints to date functions where in the world you are
 - `APPROVED_LEAVE_STATUS` - the ID number of the leave status that means
   "approved". It's not clear how customer-specific these are, YMMV. You can view
   your own organisation's leave status names and IDs using

@@ -26,7 +26,6 @@
   "license": "MIT",
   "dependencies": {
     "@slack/webhook": "^5.0.3",
-    "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
     "luxon": "^3.0.3",
     "node-fetch": "^2.6.1",
@@ -37,6 +36,7 @@
     "@types/aws-lambda": "^8.10.109",
     "@types/eslint": "^8.4.10",
     "@types/jest": "^29.2.4",
+    "@types/luxon": "^3.1.0",
     "@types/node": "^16.18.7",
     "@types/prettier": "^2.7.1",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
