@@ -1,6 +1,6 @@
 service: projectworks-leave-notify
 useDotenv: true
-frameworkVersion: "3"
+frameworkVersion: '3'
 configValidationMode: error
 plugins:
   - serverless-plugin-scripts
@@ -41,36 +41,36 @@ custom:
     npm run --silent build
   scripts:
     hooks:
-      "before:package:createDeploymentArtifacts": *prepareForPacking
-      "before:deploy:function:packageFunction": *prepareForPacking
+      'before:package:createDeploymentArtifacts': *prepareForPacking
+      'before:deploy:function:packageFunction': *prepareForPacking
 package:
   patterns:
-    - "!**/*"
-    - "package.json"
-    - "node_modules/**"
-    - "!node_modules/@types/**"
-    - "!**/tsconfig*.json"
-    - "!**/*.d.ts"
-    - "!**/*.gradle"
-    - "!**/*.h"
-    - "!**/*.html"
-    - "!**/*.java"
-    - "!**/*.m"
-    - "!**/*.map"
-    - "!**/*.md"
-    - "!**/*.npmignore"
-    - "!**/*.pbxproj"
-    - "!**/*.pem"
-    - "!**/*.podspec"
-    - "!**/*.ts"
-    - "!**/*.tsbuildinfo"
-    - "!**/*.txt"
-    - "!**/*.un~"
-    - "!**/*.xcworkspacedata"
-    - "!**/*.xml"
-    - "!**/*.yml"
-    - "!**/Makefile"
-    - "!**/node_modules/.package-lock.json"
+    - '!**/*'
+    - 'package.json'
+    - 'node_modules/**'
+    - '!node_modules/@types/**'
+    - '!**/tsconfig*.json'
+    - '!**/*.d.ts'
+    - '!**/*.gradle'
+    - '!**/*.h'
+    - '!**/*.html'
+    - '!**/*.java'
+    - '!**/*.m'
+    - '!**/*.map'
+    - '!**/*.md'
+    - '!**/*.npmignore'
+    - '!**/*.pbxproj'
+    - '!**/*.pem'
+    - '!**/*.podspec'
+    - '!**/*.ts'
+    - '!**/*.tsbuildinfo'
+    - '!**/*.txt'
+    - '!**/*.un~'
+    - '!**/*.xcworkspacedata'
+    - '!**/*.xml'
+    - '!**/*.yml'
+    - '!**/Makefile'
+    - '!**/node_modules/.package-lock.json'
     - ${self:custom.outDir}/**/*
 functions:
   weeklyReport:
