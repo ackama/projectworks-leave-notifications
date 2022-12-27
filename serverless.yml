@@ -27,9 +27,8 @@ provider:
     Owner: Ackama
   stage: ${opt:stage, 'staging'}
   # These environment vars are installed into **all** functions in the service
-  environment:
-    NODE_OPTIONS: "-r source-map-support/register"
-    # SLACK_WEBHOOK_URL: ${env:SLACK_WEBHOOK_URL}
+  # environment:
+  #   NODE_OPTIONS: "-r source-map-support/register"
 custom:
   resources:
     prefix: ${self:service}-${self:provider.stage}
@@ -75,14 +74,14 @@ package:
     - ${self:custom.outDir}/**/*
 functions:
   weeklyReport:
-    handler: ${self:custom.outDir}/handler.weeklyReport
+    handler: ${self:custom.outDir}/handlers.weeklyReport
     events:
       # Run weekly, Sunday 19:00 UTC (Monday 7/8am in NZ)
       - schedule: cron(0 19 ? * 1 *)
     tags:
       Purpose: Create and send the weekly report
   dailyReport:
-    handler: ${self:custom.outDir}/handler.dailyReport
+    handler: ${self:custom.outDir}/handlers.dailyReport
     events:
       # Run daily on week days, 19:00 UTC (7/8am in NZ)
       - schedule: cron(0 19 ? * 1-5 *)
