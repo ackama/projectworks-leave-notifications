@@ -1,22 +1,19 @@
-const { DateTime } = require('luxon');
-const { generateDailyReport } = require('../../src/publicHolidayReminder');
+import { DateTime } from 'luxon';
+import { Notifier } from '../../src/notifier';
+import { generateDailyReport } from '../../src/publicHolidayReminder';
+
+jest.mock('../../src/notifier');
 
 describe('generateDailyReport', () => {
-  const nzFixtureCalendarPath = './spec/fixtures/nz-public-holiday-dates.ics';
+  const nzFixtureCalendarPath = './test/fixtures/nz-public-holiday-dates.ics';
   const auFixtureCalendarPath =
-    './spec/fixtures/au-victorian-public-holiday-dates.ics';
-  let mockNotifier = null;
-
-  beforeEach(() => {
-    mockNotifier = { bufferMessage: jest.fn() };
-  });
+    './test/fixtures/au-victorian-public-holiday-dates.ics';
 
   it('buffers expected messages a holiday in both NZ and AU (Christmas day)', async () => {
     const xmasDay = DateTime.fromISO('2023-12-25', {
       zone: 'Pacific/Auckland'
-    })
-      .toUTC()
-      .toJSDate();
+    }).toJSDate();
+    const mockNotifier = new Notifier();
 
     await generateDailyReport(mockNotifier, {
       date: xmasDay,
@@ -24,7 +21,6 @@ describe('generateDailyReport', () => {
       auCalendarUrl: auFixtureCalendarPath
     });
 
-    // console.log(mockNotifier.bufferMessage.mock);
     expect(mockNotifier.bufferMessage).toMatchInlineSnapshot(`
     [MockFunction] {
       "calls": [
@@ -63,6 +59,7 @@ describe('generateDailyReport', () => {
     const waitangiDay = DateTime.fromISO('2023-02-06', {
       zone: 'Pacific/Auckland'
     }).toJSDate();
+    const mockNotifier = new Notifier();
 
     await generateDailyReport(mockNotifier, {
       date: waitangiDay,
@@ -99,9 +96,8 @@ describe('generateDailyReport', () => {
   it('buffers expected messages a holiday in AU only', async () => {
     const melbourneCupDay = DateTime.fromISO('2023-11-07', {
       zone: 'Pacific/Auckland'
-    })
-      .toUTC()
-      .toJSDate();
+    }).toJSDate();
+    const mockNotifier = new Notifier();
 
     await generateDailyReport(mockNotifier, {
       date: melbourneCupDay,

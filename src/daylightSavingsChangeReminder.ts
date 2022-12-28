@@ -1,12 +1,11 @@
-const { DateTime } = require('luxon');
+import { DateTime } from 'luxon';
+import { Notifier } from './notifier';
 
-module.exports.generateDailyReport = notifier => {
+export function generateDailyReport(notifier: Notifier): void {
   const nowInWellington = DateTime.now().setZone('Pacific/Auckland');
   const nowInMelbourne = DateTime.now().setZone('Australia/Melbourne');
   const nowOffsetDiff = nowInWellington.offset - nowInMelbourne.offset;
   const nowOffsetDiffHours = nowOffsetDiff / 60;
-
-  console.log(nowInWellington.offset, nowInMelbourne.offset, nowOffsetDiff);
 
   const nextWeekInWellington = nowInWellington.plus({ days: 7 });
   const nextWeekInMelbourne = nowInMelbourne.plus({ days: 7 });
@@ -39,4 +38,4 @@ module.exports.generateDailyReport = notifier => {
       );
     }
   }
-};
+}

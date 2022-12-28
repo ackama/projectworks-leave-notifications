@@ -1,7 +1,14 @@
-const { IncomingWebhook } = require('@slack/webhook');
+import { IncomingWebhook } from '@slack/webhook';
+import { chunk } from './lowerDash';
+import type { NotifierResult, SlackApiBlock, SlackApiPayload } from './types';
 
-class Notifier {
-  constructor(url = process.env.SLACK_WEBHOOK_URL) {
+const MAX_NUM_BLOCKS_PER_PAYLOAD = 50;
+
+export class Notifier {
+  private readonly slackWebhook: IncomingWebhook;
+  private blocksBuffer: SlackApiBlock[];
+
+  public constructor(url = process.env.SLACK_WEBHOOK_URL) {
     if (typeof url !== 'string') {
       throw new Error('Missing SLACK_WEBHOOK_URL from environment');
     }
@@ -16,8 +23,8 @@ class Notifier {
    * @param message The line to store in the buffer
    * @param style The formatting style to use for the given block
    */
-  bufferMessage(message, style) {
-    let block = {};
+  public bufferMessage(message: string, style: string): void {
+    let block: SlackApiBlock;
 
     console.log(message, { style });
 
@@ -84,18 +91,19 @@ class Notifier {
   /**
    * Send buffered messages and immediately empty the buffer
    */
-  async sendBufferedMessages() {
+  public async sendBufferedMessages(): Promise<NotifierResult> {
+    const blockChunks = chunk(this.blocksBuffer, MAX_NUM_BLOCKS_PER_PAYLOAD);
+
     try {
-      const payload = { blocks: this.blocksBuffer };
-
-      // Debugging Slack formatting is tricky but you can paste the JSON into
-      // the Slack Block builder and it will give you much better error messages:
-      //
-      //   https://app.slack.com/block-kit-builder/
-      //
-      // console.log(JSON.stringify(payload));
-
-      await this.slackWebhook.send(payload);
+      for (const blockChunk of blockChunks) {
+        // Debugging Slack formatting is tricky but you can paste the JSON into
+        // the Slack Block builder and it will give you much better error messages:
+        //
+        //   https://app.slack.com/block-kit-builder/
+        //
+        // eslint-disable-next-line no-await-in-loop
+        await this.slackWebhook.send({ blocks: blockChunk });
+      }
 
       // empty the buffer now that we have successfully sent its contents to Slack
       this.blocksBuffer = [];
@@ -108,7 +116,7 @@ class Notifier {
     return { success: true, message: 'OK' };
   }
 
-  async send(payload) {
+  public async send(payload: SlackApiPayload): Promise<NotifierResult> {
     try {
       await this.slackWebhook.send(payload);
     } catch (e) {
@@ -120,5 +128,3 @@ class Notifier {
     return { success: true, message: 'OK' };
   }
 }
-
-module.exports.Notifier = Notifier;

@@ -1,26 +1,43 @@
-# projectworks-leave-notifications
+# projectworks leave notifications
 
-Serverless functions that post a weekly and/or daily summary of leave record in
-ProjectWorks into Slack
+Serverless functions that post a daily and weekly summaries of useful
+information into Slack.
 
-- [x] Collects and collates weekly leave requests
-- [x] Collects and collates daily leave requests
-- [x] Sideloads user information
-- [x] Filters to approved leave requests only
-- [x] Posts to Slack via webhook
-- [x] Run at a fixed time daily and weekly
-- [ ] Has some kind of tests
-- [x] CI
-- [ ] CD
+Features:
+
+- Collects and collates approved [ProjectWorks](https://projectworks.io/) .leave
+  requests for each day and week (separate lambda functions), decorates the
+  leave request with user information from the ProjectWorks Users API and posts
+  the data as a Slack message.
+- Scrapes public holiday data from AU & NZ and posts reminders about upcoming
+  public holidays to Slack
+- Posts reminders about DST changes between New Zealand and Australia
+  (specifically AEST which covers Melbourne and Sydney)
+
+The tasks are scheduled with cron expressions that you can adjust within
+serverless.yml.
 
 ### Getting started
 
-- `npm installl`
-- `cp .env.example.production .env.development`, and fill in the missing details
-- `serverless invoke local --function weeklyReport` <- Weekly summary
-- `serverless invoke local --function dailyReport` <- Today's summary
-- `npm run lint` <- Check code style
-- `npm run test` <- Run tests
+```bash
+npm install
+
+cp .env.staging.example .env.staging
+cp .env.prod.example .env.production
+# now edit the files to have the appropriate secret values
+
+# run local code in staging env (see serverless docs for details)
+serverless invoke local --function weeklyReport -s staging
+serverless invoke local --function dailyReport -s staging
+
+npm run format # check formatting with prettier
+npm run format:fix # fix formatting with prettier
+
+npm run lint # TS linting with eslint
+npm run lint:fix # fix TS linting with eslint
+
+npm test # run tests with Jest
+```
 
 ### Configuration
 
@@ -36,28 +53,12 @@ Environment variables of note:
 - `SLACK_WEBHOOK_URL` - the webhook URL to post messages to. Must be configured
   to run, even locally.
 
-Constants that you might want to change (`handler.js`):
-
-- `PW_URL` - you _probably_ don't need to change this unless you have a CNAME,
-  proxy, or something else that changes the projectworks host to connect to.
-- `LOCALE` - hints to date-fns where in the world you are
-- `APPROVED_LEAVE_STATUS` - the ID number of the leave status that means
-  "approved". It's not clear how customer-specific these are, YMMV. You can view
-  your own organisation's leave status names and IDs using
-  `curl -X GET --header 'Accept: application/json' 'https://api.projectworksapp.com/api/v1.0/Leaves/Statuses'`
-  with your basic auth creds from above.
-- `WEEK_STARTS_ON` - what day your week starts, zero-indexed from Sunday. This
-  can be whatever day you want, and defaults to Monday. Controls what a 'week'
-  is when we're summarising leave requests.
-
 ### Deployment
 
-`serverless deploy` will provision the necessary infrastructure to run these
-scripts. AWS Lambda is assumed, but there aren't any external service
-dependencies, so this would quite easily support multiple clouds.
-
-The tasks are scheduled with cron expressions that you can adjust within
-serverless.yml.
+```bash
+npm run deploy:staging
+npm run deploy:production
+```
 
 ### Contributing
 

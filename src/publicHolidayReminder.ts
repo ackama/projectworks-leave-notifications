@@ -1,5 +1,12 @@
-const { DateTime } = require('luxon');
-const ical = require('node-ical');
+import {
+  CalendarComponent,
+  CalendarResponse,
+  DateWithTimeZone,
+  VEvent,
+  async as ical
+} from 'node-ical';
+import { toDateTime } from './dateMath';
+import { Notifier } from './notifier';
 
 const NZ_CALENDAR_URL =
   'https://calendar.google.com/calendar/ical/en.new_zealand%23holiday%40group.v.calendar.google.com/public/basic.ics';
@@ -11,8 +18,8 @@ const NZ_CALENDAR_URL =
 const AU_CALENDAR_URL =
   'https://www.vic.gov.au/sites/default/files/2022-09/Victorian-public-holiday-dates.ics';
 
-const toDateStamp = date => {
-  return DateTime.fromJSDate(date).toFormat('yyyy-MM-dd');
+const toDateStamp = (date: Date): string => {
+  return toDateTime(date).toFormat('yyyy-MM-dd');
 };
 
 // The data we get from the calendars has start and end timestamps in UTC
@@ -41,33 +48,51 @@ const toDateStamp = date => {
 //       method: 'PUBLISH'
 //   },
 //
-const findRelevantEvents = (rawEvents, date) => {
-  return Object.values(rawEvents)
-    .filter(rawEvent => toDateStamp(rawEvent.start) === toDateStamp(date))
-    .map(rawEvent => {
+const findRelevantEvents = (
+  calendarResponse: CalendarResponse,
+  date: Date
+): MyEvent[] => {
+  return Object.values(calendarResponse)
+    .filter((rawEvent): rawEvent is VEvent => {
+      return (
+        isVEvent(rawEvent) && toDateStamp(rawEvent.start) === toDateStamp(date)
+      );
+    })
+    .map(vEvent => {
       return {
-        start: rawEvent.start,
-        description: `${rawEvent.description} (${rawEvent.summary})`
+        start: vEvent.start,
+        description: `${vEvent.description} (${vEvent.summary})`
       };
     });
 };
 
-const getCalendarData = async filePathOrUrl => {
-  if (filePathOrUrl.startsWith('http')) {
-    return ical.async.fromURL(filePathOrUrl);
-  }
-
-  return ical.async.parseFile(filePathOrUrl);
+const isVEvent = (item: CalendarComponent): item is VEvent => {
+  return item.type === 'VEVENT';
 };
 
-module.exports.generateDailyReport = async (
-  notifier,
+interface MyEvent {
+  start: DateWithTimeZone;
+  description: string;
+}
+
+const getCalendarData = async (
+  filePathOrUrl: string
+): Promise<CalendarResponse> => {
+  if (filePathOrUrl.startsWith('http')) {
+    return ical.fromURL(filePathOrUrl);
+  }
+
+  return ical.parseFile(filePathOrUrl);
+};
+
+export async function generateDailyReport(
+  notifier: Notifier,
   {
     date = new Date(),
     nzCalendarUrl = NZ_CALENDAR_URL,
     auCalendarUrl = AU_CALENDAR_URL
   } = {}
-) => {
+): Promise<void> {
   const nzPublicHolidays = await getCalendarData(nzCalendarUrl);
   const auPublicHolidays = await getCalendarData(auCalendarUrl);
   const nzEvents = findRelevantEvents(nzPublicHolidays, date);
@@ -90,4 +115,4 @@ module.exports.generateDailyReport = async (
       'section'
     );
   }
-};
+}

@@ -1,0 +1,55 @@
+name: 'checks'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  # reduces noise from npm post-install scripts
+  DISABLE_OPENCOLLECTIVE: true
+  OPEN_SOURCE_CONTRIBUTOR: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run lint
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run typecheck
+
+  test:
+    name: Test on ${{ matrix.os }} using Node.js v16
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm test -- --coverage
