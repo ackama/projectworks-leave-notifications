@@ -1,26 +1,11 @@
 import fetch, { Headers, Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
+import { hasIn, isArray, isObject } from './lowerDash';
 import type { ProjectWorksLeave, ProjectWorksUser } from './types';
 
 const PW_URL = 'https://api.projectworksapp.com';
 const PW_USERNAME = process.env.PROJECTWORKS_USERNAME;
 const PW_PASSWORD = process.env.PROJECTWORKS_PASSWORD;
-
-const isObjectWithPropName = (ob: unknown, propName: string): boolean => {
-  if (!ob) {
-    return false;
-  }
-
-  if (typeof ob !== 'object') {
-    return false;
-  }
-
-  if (!(propName in ob)) {
-    return false;
-  }
-
-  return true;
-};
 
 const apiGet = async (path: string): Promise<Response> => {
   const headers = new Headers();
@@ -37,21 +22,17 @@ const apiGet = async (path: string): Promise<Response> => {
 };
 
 const isValidUser = (maybeUser: unknown): maybeUser is ProjectWorksUser => {
-  return isObjectWithPropName(maybeUser, 'UserID');
+  return isObject(maybeUser) && hasIn(maybeUser, 'UserID');
 };
 
 const isValidLeaves = (
   maybeLeaves: unknown
 ): maybeLeaves is ProjectWorksLeave[] => {
-  if (!Array.isArray(maybeLeaves)) {
-    return false;
-  }
-
-  if (maybeLeaves[0] && !isObjectWithPropName(maybeLeaves[0], 'LeaveID')) {
-    return false;
-  }
-
-  return true;
+  return (
+    isArray(maybeLeaves) &&
+    isObject(maybeLeaves[0]) &&
+    hasIn(maybeLeaves[0], 'LeaveID')
+  );
 };
 
 export const fetchUser = async (userId: number): Promise<ProjectWorksUser> => {
