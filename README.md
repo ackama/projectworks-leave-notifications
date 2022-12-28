@@ -1,26 +1,43 @@
-# projectworks-leave-notifications
+# projectworks leave notifications
 
-Serverless functions that post a weekly and/or daily summary of leave record in
-ProjectWorks into Slack
+Serverless functions that post a daily and weekly summaries of useful
+information into Slack.
 
-- [x] Collects and collates weekly leave requests
-- [x] Collects and collates daily leave requests
-- [x] Sideloads user information
-- [x] Filters to approved leave requests only
-- [x] Posts to Slack via webhook
-- [x] Run at a fixed time daily and weekly
-- [ ] Has some kind of tests
-- [x] CI
-- [ ] CD
+Features:
+
+- Collects and collates approved [ProjectWorks](https://projectworks.io/) .leave
+  requests for each day and week (separate lambda functions), decorates the
+  leave request with user information from the ProjectWorks Users API and posts
+  the data as a Slack message.
+- Scrapes public holiday data from AU & NZ and posts reminders about upcoming
+  public holidays to Slack
+- Posts reminders about DST changes between New Zealand and Australia
+  (specifically AEST which covers Melbourne and Sydney)
+
+The tasks are scheduled with cron expressions that you can adjust within
+serverless.yml.
 
 ### Getting started
 
-- `npm installl`
-- `cp .env.example.production .env.development`, and fill in the missing details
-- `serverless invoke local --function weeklyReport` <- Weekly summary
-- `serverless invoke local --function dailyReport` <- Today's summary
-- `npm run lint` <- Check code style
-- `npm run test` <- Run tests
+```bash
+npm install
+
+cp .env.staging.example .env.staging
+cp .env.prod.example .env.production
+# now edit the files to have the appropriate secret values
+
+# run local code in staging env (see serverless docs for details)
+serverless invoke local --function weeklyReport -s staging
+serverless invoke local --function dailyReport -s staging
+
+npm run format # check formatting with prettier
+npm run format:fix # fix formatting with prettier
+
+npm run lint # TS linting with eslint
+npm run lint:fix # fix TS linting with eslint
+
+npm test # run tests with Jest
+```
 
 ### Configuration
 
@@ -38,12 +55,10 @@ Environment variables of note:
 
 ### Deployment
 
-`serverless deploy` will provision the necessary infrastructure to run these
-scripts. AWS Lambda is assumed, but there aren't any external service
-dependencies, so this would quite easily support multiple clouds.
-
-The tasks are scheduled with cron expressions that you can adjust within
-serverless.yml.
+```bash
+npm deploy:staging
+npm deploy:production
+```
 
 ### Contributing
 
