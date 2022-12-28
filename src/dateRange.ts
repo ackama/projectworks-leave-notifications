@@ -9,7 +9,7 @@ export const utcWeekRange = (on: Date = new Date()): [startOfWeek: Date, endOfWe
   ];
 };
 
-export const utcDayRange = (on: Date = new Date()): [Date, Date] => {
+export const utcDayRange = (on: Date = new Date()): [startOfDay: Date, endOfDay: Date] => {
   const targetDateTime = jsDateToDateTime(on);
 
   return [
