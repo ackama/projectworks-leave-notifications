@@ -56,8 +56,8 @@ Environment variables of note:
 ### Deployment
 
 ```bash
-npm deploy:staging
-npm deploy:production
+npm run deploy:staging
+npm run deploy:production
 ```
 
 ### Contributing
