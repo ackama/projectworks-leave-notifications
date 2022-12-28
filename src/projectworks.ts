@@ -1,6 +1,5 @@
 import fetch, { Headers, Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
-import { hasIn, isArray, isObject } from './lowerDash';
 import type { ProjectWorksLeave, ProjectWorksUser } from './types';
 
 const PW_URL = 'https://api.projectworksapp.com';
@@ -21,44 +20,26 @@ const apiGet = async (path: string): Promise<Response> => {
   return fetch(`${PW_URL}${path}`, { headers });
 };
 
-const isValidUser = (maybeUser: unknown): maybeUser is ProjectWorksUser => {
-  return isObject(maybeUser) && hasIn(maybeUser, 'UserID');
-};
-
-const isValidLeaves = (
-  maybeLeaves: unknown
-): maybeLeaves is ProjectWorksLeave[] => {
-  return (
-    isArray(maybeLeaves) &&
-    isObject(maybeLeaves[0]) &&
-    hasIn(maybeLeaves[0], 'LeaveID')
-  );
-};
-
 export const fetchUser = async (userId: number): Promise<ProjectWorksUser> => {
-  const rawUser = await apiGet(`/api/v1.0/Users/${userId}`);
+  const response = await apiGet(`/api/v1.0/Users/${userId}`);
 
-  const user: unknown = await rawUser.json();
-
-  if (isValidUser(user)) {
-    return user;
+  if (!response.ok) {
+    throw new Error('ProjectWorks responded with error when fetching User');
   }
 
-  throw new Error('Failed to get User');
+  return (await response.json()) as ProjectWorksUser;
 };
 
 export const fetchLeaves = async (
   params: Record<string, string>
 ): Promise<ProjectWorksLeave[]> => {
-  const rawLeaves = await apiGet(
+  const response = await apiGet(
     `/api/v1.0/Leaves?${new URLSearchParams(params).toString()}`
   );
 
-  const leaves: unknown = await rawLeaves.json();
-
-  if (isValidLeaves(leaves)) {
-    return leaves;
+  if (!response.ok) {
+    throw new Error('ProjectWorks responded with error when fetching Leaves');
   }
 
-  throw new Error('Failed to get leave from ProjectWorks');
+  return (await response.json()) as ProjectWorksLeave[];
 };
