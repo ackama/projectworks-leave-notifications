@@ -1,5 +1,8 @@
 import { IncomingWebhook } from '@slack/webhook';
+import { chunk } from './lowerDash';
 import type { NotifierResult, SlackApiBlock, SlackApiPayload } from './types';
+
+const MAX_NUM_BLOCKS_PER_PAYLOAD = 50;
 
 export class Notifier {
   private readonly slackWebhook: IncomingWebhook;
@@ -89,17 +92,18 @@ export class Notifier {
    * Send buffered messages and immediately empty the buffer
    */
   public async sendBufferedMessages(): Promise<NotifierResult> {
+    const blockChunks = chunk(this.blocksBuffer, MAX_NUM_BLOCKS_PER_PAYLOAD);
+
     try {
-      const payload = { blocks: this.blocksBuffer };
-
-      // Debugging Slack formatting is tricky but you can paste the JSON into
-      // the Slack Block builder and it will give you much better error messages:
-      //
-      //   https://app.slack.com/block-kit-builder/
-      //
-      // console.log(JSON.stringify(payload));
-
-      await this.slackWebhook.send(payload);
+      for (const blockChunk of blockChunks) {
+        // Debugging Slack formatting is tricky but you can paste the JSON into
+        // the Slack Block builder and it will give you much better error messages:
+        //
+        //   https://app.slack.com/block-kit-builder/
+        //
+        // eslint-disable-next-line no-await-in-loop
+        await this.slackWebhook.send({ blocks: blockChunk });
+      }
 
       // empty the buffer now that we have successfully sent its contents to Slack
       this.blocksBuffer = [];
