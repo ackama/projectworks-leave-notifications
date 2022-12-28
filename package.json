@@ -26,7 +26,6 @@
   "license": "MIT",
   "dependencies": {
     "@slack/webhook": "^5.0.3",
-    "date-fns-tz": "^1.0.12",
     "luxon": "^3.0.3",
     "node-fetch": "^2.6.7",
     "node-ical": "^0.15.1"
@@ -54,7 +53,6 @@
     "prettier": "^2.8.1",
     "prettier-config-ackama": "^1.1.0",
     "serverless": "^3.25.1",
-    "serverless-dotenv-plugin": "^3.1.0",
     "serverless-plugin-scripts": "^1.0.2",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",

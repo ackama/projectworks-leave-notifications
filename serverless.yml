@@ -4,7 +4,6 @@ frameworkVersion: '3'
 configValidationMode: error
 plugins:
   - serverless-plugin-scripts
-  - serverless-dotenv-plugin
 provider:
   name: aws
   region: ap-southeast-2
@@ -27,8 +26,11 @@ provider:
     Owner: Ackama
   stage: ${opt:stage, 'staging'}
   # These environment vars are installed into **all** functions in the service
-  # environment:
-  #   NODE_OPTIONS: "-r source-map-support/register"
+  environment:
+    TZ: "Pacific/Auckland"
+    SLACK_WEBHOOK_URL: ${env:SLACK_WEBHOOK_URL}
+    PROJECTWORKS_USERNAME: ${env:PROJECTWORKS_USERNAME}
+    PROJECTWORKS_PASSWORD: ${env:PROJECTWORKS_PASSWORD}
 custom:
   resources:
     prefix: ${self:service}-${self:provider.stage}
