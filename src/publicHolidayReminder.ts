@@ -53,13 +53,13 @@ const findRelevantEvents = (
   date: Date
 ): MyEvent[] => {
   return Object.values(calendarResponse)
-    .filter(rawEvent => {
+    .filter((rawEvent): rawEvent is VEvent => {
       return (
         isVEvent(rawEvent) && toDateStamp(rawEvent.start) === toDateStamp(date)
       );
     })
     .map(rawEvent => {
-      const vEvent = rawEvent as VEvent; // safe to cast here because we ran isVEvent in filter() above
+      const vEvent = rawEvent;
 
       return {
         start: vEvent.start,
