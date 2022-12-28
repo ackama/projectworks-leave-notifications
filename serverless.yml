@@ -27,7 +27,7 @@ provider:
   stage: ${opt:stage, 'staging'}
   # These environment vars are installed into **all** functions in the service
   environment:
-    TZ: "Pacific/Auckland"
+    TZ: 'Pacific/Auckland'
     SLACK_WEBHOOK_URL: ${env:SLACK_WEBHOOK_URL}
     PROJECTWORKS_USERNAME: ${env:PROJECTWORKS_USERNAME}
     PROJECTWORKS_PASSWORD: ${env:PROJECTWORKS_PASSWORD}

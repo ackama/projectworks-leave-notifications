@@ -33,28 +33,27 @@ describe('utcWeekRange', () => {
 });
 
 describe('utcDayRange', () => {
-  it('returns Date objects representing the start and end of the day containing the given Date', () => {
-    const examples = [
-      {
-        in: new Date('2021-01-13T14:00:00.000Z'),
-        out: [
-          new Date('2021-01-13T11:00:00.000Z'),
-          new Date('2021-01-14T10:59:59.999Z')
-        ]
-      },
-      {
-        in: new Date('2022-06-15T00:00:00.000Z'),
-        out: [
-          new Date('2022-06-14T12:00:00.000Z'),
-          new Date('2022-06-15T11:59:59.999Z')
-        ]
-      }
-    ];
-
-    for (const example of examples) {
+  it.each([
+    {
+      in: new Date('2021-01-13T14:00:00.000Z'),
+      out: [
+        new Date('2021-01-13T11:00:00.000Z'),
+        new Date('2021-01-14T10:59:59.999Z')
+      ]
+    },
+    {
+      in: new Date('2022-06-15T00:00:00.000Z'),
+      out: [
+        new Date('2022-06-14T12:00:00.000Z'),
+        new Date('2022-06-15T11:59:59.999Z')
+      ]
+    }
+  ])(
+    'returns Date objects representing the start and end of the day containing the given Date',
+    example => {
       expect(utcDayRange(example.in).map(r => toMillis(r))).toStrictEqual(
         example.out.map(r => toMillis(r))
       );
     }
-  });
+  );
 });
