@@ -19,6 +19,7 @@
 //   days: []
 // }
 export interface ProjectWorksUser {
+  UserID: number;
   FirstName: string;
   LastName: string;
 }
