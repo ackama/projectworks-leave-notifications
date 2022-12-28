@@ -36,20 +36,6 @@ Environment variables of note:
 - `SLACK_WEBHOOK_URL` - the webhook URL to post messages to. Must be configured
   to run, even locally.
 
-Constants that you might want to change (`handler.js`):
-
-- `PW_URL` - you _probably_ don't need to change this unless you have a CNAME,
-  proxy, or something else that changes the projectworks host to connect to.
-- `LOCALE` - hints to date functions where in the world you are
-- `APPROVED_LEAVE_STATUS` - the ID number of the leave status that means
-  "approved". It's not clear how customer-specific these are, YMMV. You can view
-  your own organisation's leave status names and IDs using
-  `curl -X GET --header 'Accept: application/json' 'https://api.projectworksapp.com/api/v1.0/Leaves/Statuses'`
-  with your basic auth creds from above.
-- `WEEK_STARTS_ON` - what day your week starts, zero-indexed from Sunday. This
-  can be whatever day you want, and defaults to Monday. Controls what a 'week'
-  is when we're summarising leave requests.
-
 ### Deployment
 
 `serverless deploy` will provision the necessary infrastructure to run these
