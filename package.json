@@ -9,7 +9,7 @@
     "deploy:production": "sls deploy --stage prod",
     "deploy:staging": "sls deploy --stage staging",
     "format": "prettier --check './**/*.{css,scss,json,md,js,ts,tsx,jsx}'",
-    "format:fix": "prettier --write * --ignore-path .gitignore",
+    "format:fix": "prettier --write *",
     "lint": "eslint '*/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint . --ignore-pattern '!.eslintrc.js' --ext js,ts,tsx,jsx --fix",
     "test": "jest --colors",
