@@ -2,6 +2,15 @@ import fetch, { Headers, Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
 import type { ProjectWorksLeave, ProjectWorksUser } from './types';
 
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      PROJECTWORKS_USERNAME: string;
+      PROJECTWORKS_PASSWORD: string;
+    }
+  }
+}
+
 const PW_URL = 'https://api.projectworksapp.com';
 const PW_USERNAME = process.env.PROJECTWORKS_USERNAME;
 const PW_PASSWORD = process.env.PROJECTWORKS_PASSWORD;
@@ -12,9 +21,7 @@ const apiGet = async (path: string): Promise<Response> => {
   headers.append('Accept', 'application/json');
   headers.append(
     'Authorization',
-    `Basic ${Buffer.from(
-      `${PW_USERNAME as string}:${PW_PASSWORD as string}`
-    ).toString('base64')}`
+    `Basic ${Buffer.from(`${PW_USERNAME}:${PW_PASSWORD}`).toString('base64')}`
   );
 
   return fetch(`${PW_URL}${path}`, { headers });
