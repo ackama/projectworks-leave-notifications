@@ -3,7 +3,7 @@ import {
   CalendarResponse,
   DateWithTimeZone,
   VEvent,
-  async
+  async as ical
 } from 'node-ical';
 import { jsDateToDateTime } from './dateMath';
 import { Notifier } from './notifier';
