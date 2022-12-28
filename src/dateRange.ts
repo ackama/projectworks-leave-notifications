@@ -1,7 +1,9 @@
-import { jsDateToDateTime } from './dateMath';
+import { toDateTime } from './dateMath';
 
-export const utcWeekRange = (on: Date = new Date()): [startOfWeek: Date, endOfWeek: Date] => {
-  const targetDateTime = jsDateToDateTime(on);
+export const utcWeekRange = (
+  on: Date = new Date()
+): [startOfWeek: Date, endOfWeek: Date] => {
+  const targetDateTime = toDateTime(on);
 
   return [
     targetDateTime.startOf('week').toJSDate(),
@@ -9,8 +11,10 @@ export const utcWeekRange = (on: Date = new Date()): [startOfWeek: Date, endOfWe
   ];
 };
 
-export const utcDayRange = (on: Date = new Date()): [startOfDay: Date, endOfDay: Date] => {
-  const targetDateTime = jsDateToDateTime(on);
+export const utcDayRange = (
+  on: Date = new Date()
+): [startOfDay: Date, endOfDay: Date] => {
+  const targetDateTime = toDateTime(on);
 
   return [
     targetDateTime.startOf('day').toJSDate(),

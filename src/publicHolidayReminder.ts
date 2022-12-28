@@ -3,9 +3,9 @@ import {
   CalendarResponse,
   DateWithTimeZone,
   VEvent,
-  async
+  async as ical
 } from 'node-ical';
-import { jsDateToDateTime } from './dateMath';
+import { toDateTime } from './dateMath';
 import { Notifier } from './notifier';
 
 const NZ_CALENDAR_URL =
@@ -19,7 +19,7 @@ const AU_CALENDAR_URL =
   'https://www.vic.gov.au/sites/default/files/2022-09/Victorian-public-holiday-dates.ics';
 
 const toDateStamp = (date: Date): string => {
-  return jsDateToDateTime(date).toFormat('yyyy-MM-dd');
+  return toDateTime(date).toFormat('yyyy-MM-dd');
 };
 
 // The data we get from the calendars has start and end timestamps in UTC
@@ -81,10 +81,10 @@ const getCalendarData = async (
   filePathOrUrl: string
 ): Promise<CalendarResponse> => {
   if (filePathOrUrl.startsWith('http')) {
-    return async.fromURL(filePathOrUrl);
+    return ical.fromURL(filePathOrUrl);
   }
 
-  return async.parseFile(filePathOrUrl);
+  return ical.parseFile(filePathOrUrl);
 };
 
 export async function generateDailyReport(
