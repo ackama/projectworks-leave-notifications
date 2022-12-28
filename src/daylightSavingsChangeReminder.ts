@@ -7,8 +7,6 @@ export function generateDailyReport(notifier: Notifier): void {
   const nowOffsetDiff = nowInWellington.offset - nowInMelbourne.offset;
   const nowOffsetDiffHours = nowOffsetDiff / 60;
 
-  console.log(nowInWellington.offset, nowInMelbourne.offset, nowOffsetDiff);
-
   const nextWeekInWellington = nowInWellington.plus({ days: 7 });
   const nextWeekInMelbourne = nowInMelbourne.plus({ days: 7 });
   const nextWeekOffsetDiff =
