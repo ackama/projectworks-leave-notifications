@@ -6,10 +6,6 @@ const PW_URL = 'https://api.projectworksapp.com';
 const PW_USERNAME = process.env.PROJECTWORKS_USERNAME;
 const PW_PASSWORD = process.env.PROJECTWORKS_PASSWORD;
 
-interface Params {
-  [key: string]: string;
-}
-
 const apiGet = async (path: string): Promise<Response> => {
   const headers = new Headers();
 
@@ -40,27 +36,31 @@ const isValidUser = (maybeUser: unknown): maybeUser is ProjectWorksUser => {
   return true;
 };
 
-const isValidLeaves = (
-  maybeLeaves: unknown
-): maybeLeaves is ProjectWorksLeave[] => {
-  if (!maybeLeaves) {
+const isObjectWithPropName = (ob: unknown, propName: string): boolean => {
+  if (!ob) {
     return false;
   }
 
+  if (typeof ob !== 'object') {
+    return false;
+  }
+
+  if (!(propName in ob)) {
+    return false;
+  }
+
+  return true;
+};
+
+const isValidLeaves = (
+  maybeLeaves: unknown
+): maybeLeaves is ProjectWorksLeave[] => {
   if (!Array.isArray(maybeLeaves)) {
     return false;
   }
 
-  // if maybeLeaves has any elements, check that the first element is an object
-  // with a 'LeaveID' property
-  if (maybeLeaves.length > 0) {
-    if (typeof maybeLeaves[0] !== 'object') {
-      return false;
-    }
-
-    if (!('LeaveID' in maybeLeaves[0])) {
-      return false;
-    }
+  if (maybeLeaves[0] && !isObjectWithPropName(maybeLeaves[0], 'LeaveID')) {
+    return false;
   }
 
   return true;
@@ -79,7 +79,7 @@ export const fetchUser = async (userId: number): Promise<ProjectWorksUser> => {
 };
 
 export const fetchLeaves = async (
-  params: Params
+  params: Record<string, string>
 ): Promise<ProjectWorksLeave[]> => {
   const rawLeaves = await apiGet(
     `/api/v1.0/Leaves?${new URLSearchParams(params).toString()}`

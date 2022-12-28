@@ -58,9 +58,7 @@ const findRelevantEvents = (
         isVEvent(rawEvent) && toDateStamp(rawEvent.start) === toDateStamp(date)
       );
     })
-    .map(rawEvent => {
-      const vEvent = rawEvent;
-
+    .map(vEvent => {
       return {
         start: vEvent.start,
         description: `${vEvent.description} (${vEvent.summary})`
