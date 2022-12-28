@@ -1,6 +1,6 @@
 import { jsDateToDateTime } from './dateMath';
 
-export const utcWeekRange = (on: Date = new Date()): [Date, Date] => {
+export const utcWeekRange = (on: Date = new Date()): [startOfWeek: Date, endOfWeek: Date] => {
   const targetDateTime = jsDateToDateTime(on);
 
   return [
