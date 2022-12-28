@@ -6,6 +6,22 @@ const PW_URL = 'https://api.projectworksapp.com';
 const PW_USERNAME = process.env.PROJECTWORKS_USERNAME;
 const PW_PASSWORD = process.env.PROJECTWORKS_PASSWORD;
 
+const isObjectWithPropName = (ob: unknown, propName: string): boolean => {
+  if (!ob) {
+    return false;
+  }
+
+  if (typeof ob !== 'object') {
+    return false;
+  }
+
+  if (!(propName in ob)) {
+    return false;
+  }
+
+  return true;
+};
+
 const apiGet = async (path: string): Promise<Response> => {
   const headers = new Headers();
 
@@ -21,35 +37,7 @@ const apiGet = async (path: string): Promise<Response> => {
 };
 
 const isValidUser = (maybeUser: unknown): maybeUser is ProjectWorksUser => {
-  if (!maybeUser) {
-    return false;
-  }
-
-  if (typeof maybeUser !== 'object') {
-    return false;
-  }
-
-  if (!('UserID' in maybeUser)) {
-    return false;
-  }
-
-  return true;
-};
-
-const isObjectWithPropName = (ob: unknown, propName: string): boolean => {
-  if (!ob) {
-    return false;
-  }
-
-  if (typeof ob !== 'object') {
-    return false;
-  }
-
-  if (!(propName in ob)) {
-    return false;
-  }
-
-  return true;
+  return isObjectWithPropName(maybeUser, 'UserID');
 };
 
 const isValidLeaves = (
