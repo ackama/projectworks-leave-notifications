@@ -1,5 +1,5 @@
 // Utility functions inspired by (but not exactly matching) lodash API
-// https://lodash.com/docs/. Copied from https://github.com/eoinkelly/lowerdash
+// https://lodash.com/docs/. Inspired by https://youmightnotneed.com/lodash
 
 export const chunk = <T>(arr: T[], len: number): T[][] => {
   const chunks = [];
