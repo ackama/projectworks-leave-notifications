@@ -26,7 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@slack/webhook": "^5.0.3",
-    "luxon": "^3.0.3",
+    "luxon": "^3.2.1",
     "node-fetch": "^2.6.7",
     "node-ical": "^0.15.1"
   },
