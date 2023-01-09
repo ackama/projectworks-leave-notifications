@@ -35,7 +35,7 @@ const formatForWeeklyReport = ({ user, days }: Leave, withDate = true) => {
     .map(
       ({ Date: dateStr, Hours: hours }) =>
         `${
-          withDate ? toDateTime(new Date(dateStr)).toFormat('EEE do') : ''
+          withDate ? toDateTime(new Date(dateStr)).toFormat('EEE d LLL') : ''
         } (${formatHours(hours)})`
     )
     .filter(entry => entry.length)
