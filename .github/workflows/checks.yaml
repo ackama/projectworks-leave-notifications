@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 20.x
           cache: 'npm'
 
       - run: npm ci
@@ -30,14 +30,14 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 20.x
           cache: 'npm'
 
       - run: npm ci
       - run: npm run typecheck
 
   test:
-    name: Test on ${{ matrix.os }} using Node.js v16
+    name: Test on ${{ matrix.os }} using Node.js v20
     strategy:
       fail-fast: false
       matrix:
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 20.x
           cache: 'npm'
 
       - run: npm ci
