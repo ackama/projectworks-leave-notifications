@@ -25,7 +25,9 @@
   "author": "Ackama Developers <developers@ackama.com>",
   "license": "MIT",
   "dependencies": {
+    "@slack/web-api": "^6.11.0",
     "@slack/webhook": "^7.0.1",
+    "contentful": "^10.6.14",
     "luxon": "^3.4.4",
     "node-fetch": "^2.6.7",
     "node-ical": "^0.17.1"
