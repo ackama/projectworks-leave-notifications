@@ -16,7 +16,7 @@ const NZ_CALENDAR_URL =
 // will avoid us having to filter out holidays from other states.
 // const AU_CALENDAR_URL = 'https://calendar.google.com/calendar/ical/en.australian.official%23holiday%40group.v.calendar.google.com/public/basic.ics'
 const AU_CALENDAR_URL =
-  'https://www.vic.gov.au/sites/default/files/2022-09/Victorian-public-holiday-dates.ics';
+  'https://content.vic.gov.au/sites/default/files/2022-09/Victorian-public-holiday-dates.ics';
 
 const toDateStamp = (date: Date): string => {
   return toDateTime(date).toFormat('yyyy-MM-dd');

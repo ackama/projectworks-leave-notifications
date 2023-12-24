@@ -72,7 +72,7 @@ export interface ProjectWorksLeave {
 
 export interface SlackApiBlock {
   type: string;
-  text?: string | object;
+  text?: object | string;
   elements?: object[];
 }
 

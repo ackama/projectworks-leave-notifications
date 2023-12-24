@@ -7,7 +7,7 @@ plugins:
 provider:
   name: aws
   region: ap-southeast-2
-  runtime: nodejs16.x
+  runtime: nodejs20.x
   apiGateway:
     shouldStartNameWithService: true
   logRetentionInDays: 14
