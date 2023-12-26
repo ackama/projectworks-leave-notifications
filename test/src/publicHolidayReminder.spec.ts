@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { Notifier } from '../../src/notifier';
-import { generateDailyReport } from '../../src/publicHolidayReminder';
+import { generateDailyReport } from '../../src/reminders/publicHolidayReminder';
 
 jest.mock('../../src/notifier');
 

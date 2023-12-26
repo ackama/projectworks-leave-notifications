@@ -1,8 +1,8 @@
 import { ScheduledHandler } from 'aws-lambda';
-import * as daylightSavingsChangeReminder from './daylightSavingsChangeReminder';
-import * as leaveReminder from './leaveReminder';
 import { Notifier } from './notifier';
-import * as publicHolidayReminder from './publicHolidayReminder';
+import * as daylightSavingsChangeReminder from './reminders/daylightSavingsChangeReminder';
+import * as leaveReminder from './reminders/leaveReminder';
+import * as publicHolidayReminder from './reminders/publicHolidayReminder';
 
 export const weeklyReport: ScheduledHandler = async () => {
   const notifier = new Notifier();
