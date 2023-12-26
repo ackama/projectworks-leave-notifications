@@ -1,5 +1,5 @@
 import { leavesBetween } from './leaveReminder/leaves';
-import type { Notifier } from '../adapters/notifier';
+import type { Notifier } from '../adapters/slack';
 import type { Leave } from '../types';
 import { toDateTime, utcDayRange, utcWeekRange } from '../util/date';
 

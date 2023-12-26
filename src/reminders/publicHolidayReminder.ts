@@ -5,7 +5,7 @@ import {
   VEvent,
   async as ical
 } from 'node-ical';
-import { Notifier } from '../adapters/notifier';
+import { Notifier } from '../adapters/slack';
 import { toDateTime } from '../util/date';
 
 const NZ_CALENDAR_URL =
