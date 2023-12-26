@@ -1,7 +1,7 @@
 import type { Notifier } from '../adapters/notifier';
 import { leavesBetween } from '../leaves';
 import type { Leave } from '../types';
-import { toDateTime, utcDayRange, utcWeekRange } from '../util/dateRange';
+import { toDateTime, utcDayRange, utcWeekRange } from '../util/date';
 
 const FULL_DAY_CUTOFF_HOURS = 7; // Leave on or over this amount will assume a full day
 

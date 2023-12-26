@@ -6,7 +6,7 @@ import {
   async as ical
 } from 'node-ical';
 import { Notifier } from '../adapters/notifier';
-import { toDateTime } from '../util/dateRange';
+import { toDateTime } from '../util/date';
 
 const NZ_CALENDAR_URL =
   'https://calendar.google.com/calendar/ical/en.new_zealand%23holiday%40group.v.calendar.google.com/public/basic.ics';
