@@ -1,5 +1,5 @@
+import type { Notifier } from '../adapters/notifier';
 import { leavesBetween } from '../leaves';
-import type { Notifier } from '../notifier';
 import type { Leave } from '../types';
 import { toDateTime } from '../util/dateMath';
 import { utcDayRange, utcWeekRange } from '../util/dateRange';

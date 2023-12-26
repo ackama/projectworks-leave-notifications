@@ -1,5 +1,5 @@
 import { DateTime, Interval } from 'luxon';
-import { fetchLeaves, fetchUser } from './projectworks';
+import { fetchLeaves, fetchUser } from './adapters/projectworks';
 import type { Leave, ProjectWorksLeave } from './types';
 import { sortByUser } from './util/sortByUsers';
 

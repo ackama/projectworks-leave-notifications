@@ -1,5 +1,5 @@
 import { ScheduledHandler } from 'aws-lambda';
-import { Notifier } from './notifier';
+import { Notifier } from './adapters/notifier';
 import * as daylightSavingsChangeReminder from './reminders/daylightSavingsChangeReminder';
 import * as leaveReminder from './reminders/leaveReminder';
 import * as publicHolidayReminder from './reminders/publicHolidayReminder';

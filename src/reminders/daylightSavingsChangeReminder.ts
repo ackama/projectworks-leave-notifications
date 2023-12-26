@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { Notifier } from '../notifier';
+import { Notifier } from '../adapters/notifier';
 
 export function generateDailyReport(notifier: Notifier): void {
   const nowInWellington = DateTime.now().setZone('Pacific/Auckland');

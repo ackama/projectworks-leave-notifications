@@ -1,6 +1,6 @@
 import { IncomingWebhook } from '@slack/webhook';
-import { chunk } from './lowerDash';
-import type { NotifierResult, SlackApiBlock, SlackApiPayload } from './types';
+import { chunk } from '../lowerDash';
+import type { NotifierResult, SlackApiBlock, SlackApiPayload } from '../types';
 
 const MAX_NUM_BLOCKS_PER_PAYLOAD = 50;
 

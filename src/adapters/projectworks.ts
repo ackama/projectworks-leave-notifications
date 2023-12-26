@@ -1,6 +1,6 @@
 import fetch, { Headers, Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
-import type { ProjectWorksLeave, ProjectWorksUser } from './types';
+import type { ProjectWorksLeave, ProjectWorksUser } from '../types';
 
 declare global {
   namespace NodeJS {
