@@ -1,4 +1,4 @@
-import { utcDayRange, utcWeekRange } from '../../src/dateRange';
+import { utcDayRange, utcWeekRange } from '../../src/util/dateRange';
 
 // JS Date objects are not comparable so we convert them to their underlying
 // integer representation

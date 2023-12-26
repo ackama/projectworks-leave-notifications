@@ -5,8 +5,8 @@ import {
   VEvent,
   async as ical
 } from 'node-ical';
-import { toDateTime } from './dateMath';
 import { Notifier } from './notifier';
+import { toDateTime } from './util/dateMath';
 
 const NZ_CALENDAR_URL =
   'https://calendar.google.com/calendar/ical/en.new_zealand%23holiday%40group.v.calendar.google.com/public/basic.ics';

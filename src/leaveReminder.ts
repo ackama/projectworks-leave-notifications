@@ -1,8 +1,8 @@
-import { toDateTime } from './dateMath';
-import { utcDayRange, utcWeekRange } from './dateRange';
 import { leavesBetween } from './leaves';
 import type { Notifier } from './notifier';
 import type { Leave } from './types';
+import { toDateTime } from './util/dateMath';
+import { utcDayRange, utcWeekRange } from './util/dateRange';
 
 const FULL_DAY_CUTOFF_HOURS = 7; // Leave on or over this amount will assume a full day
 

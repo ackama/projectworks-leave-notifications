@@ -1,4 +1,4 @@
-import { sortByUser } from '../../src/sortByUsers';
+import { sortByUser } from '../../src/util/sortByUsers';
 
 describe('sortByUser', () => {
   it('sorts by first name then by last name', () => {
