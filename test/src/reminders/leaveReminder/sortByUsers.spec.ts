@@ -1,4 +1,4 @@
-import { sortByUser } from '../../src/util/sortByUsers';
+import { sortByUser } from '../../../../src/reminders/leaveReminder/sortByUsers';
 
 describe('sortByUser', () => {
   it('sorts by first name then by last name', () => {

@@ -1,7 +1,7 @@
 import { DateTime, Interval } from 'luxon';
-import { fetchLeaves, fetchUser } from './adapters/projectworks';
-import type { Leave, ProjectWorksLeave } from './types';
-import { sortByUser } from './util/sortByUsers';
+import { sortByUser } from './sortByUsers';
+import { fetchLeaves, fetchUser } from '../../adapters/projectworks';
+import type { Leave, ProjectWorksLeave } from '../../types';
 
 const APPROVED_LEAVE_STATUS = 2;
 
