@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon';
-import { Notifier } from '../../src/adapters/notifier';
-import { generateDailyReport } from '../../src/reminders/publicHolidayReminder';
+import { Notifier } from '../../../src/adapters/notifier';
+import { generateDailyReport } from '../../../src/reminders/publicHolidayReminder';
 
-jest.mock('../../src/adapters/notifier');
+jest.mock('../../../src/adapters/notifier');
 
 describe('generateDailyReport', () => {
   const nzFixtureCalendarPath = './test/fixtures/nz-public-holiday-dates.ics';
